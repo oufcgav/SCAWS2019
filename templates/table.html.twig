@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'table' %}
+
+{% block content %}
+    <h4>Current table</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Pld</th>
+            <th>Pints</th>
+            <th>Bonus pts</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+        {% for player in table %}
+            <tr>
+                <td>{#<a href="{{ path('player', { name: player.human }) }}">{{ player.human }}</a>#}</td>
+                <td>{{ player.played }}</td>
+                <td>{{ player.pints_drunk }}</td>
+                <td>{{ player.bonus_points }}</td>
+                <td>{{ player.points }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

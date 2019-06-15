@@ -1,3 +1,7 @@
 homepage:
     path: /
     controller: App\Controller\DefaultController::index
+
+table:
+    path: /table
+    controller: App\Controller\TableController::index
