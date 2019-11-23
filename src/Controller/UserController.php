@@ -5,9 +5,8 @@ namespace App\Controller;
 use App\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class TableController extends AbstractController
+class UserController extends AbstractController
 {
-
     /**
      * @var UserProvider
      */
@@ -18,9 +17,9 @@ class TableController extends AbstractController
         $this->userProvider = $userProvider;
     }
 
-    public function index()
+    public function index(string $username)
     {
-        $users = $this->userProvider->getUsers();
-        return $this->render('table.html.twig', ['table' => $users]);
+        $user = $this->userProvider->loadUserByUsername($username);
+        return $this->render('user.html.twig', ['user' => $user, 'predictions' => []]);
     }
 }

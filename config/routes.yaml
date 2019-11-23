@@ -5,3 +5,7 @@ homepage:
 table:
     path: /table
     controller: App\Controller\TableController::index
+
+user:
+    path: /user/{username}
+    controller: App\Controller\UserController::index

@@ -3,7 +3,6 @@
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TableTest extends WebTestCase
 {
@@ -12,19 +11,7 @@ class TableTest extends WebTestCase
     {
         $client = $this->login();
         $table = $client->request('GET', '/table');
-        $this->assertEquals(7, $table->filter('tr')->count());
+        $this->assertEquals(7, $table->filter('tbody tr')->count());
     }
 
-    private function login(): KernelBrowser
-    {
-        $client = self::createClient();
-        $login = $client->request('GET', '/login');
-        $form = $login->selectButton('Sign in')->form();
-
-        $form['username'] = 'Andy';
-        $form['password'] = 'whing';
-
-        $client->submit($form);
-        return $client;
-    }
 }

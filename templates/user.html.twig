@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'table' %}
+
+{% block content %}
+    <h4>All predictions for {{ user.username }}</h4>
+    <ul>
+        {% for prediction in predictions %}
+        <li>vs {{ prediction.opposition }} {% if prediction.location == 'Home' %}(H){% else %}(A){% endif %} on {{ prediction.match_date|date("D jS M") }}
+            {{ prediction.position }} {{ prediction.time }} - {{ prediction.points }}pts</li>
+        {% else %}
+        <li>No predictions logged.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

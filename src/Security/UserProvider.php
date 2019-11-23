@@ -12,10 +12,20 @@ class UserProvider implements UserProviderInterface
 {
 
     private $passwordEncoder;
+    private $users;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
+        $this->users = [
+            'Andy',
+            'Blochy',
+            'Deadly',
+            'Gav',
+            'Just',
+            'Smudge',
+            'Stu'
+        ];
     }
 
     /**
@@ -31,16 +41,7 @@ class UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $users = [
-            'Andy',
-            'Blochy',
-            'Deadly',
-            'Gav',
-            'Just',
-            'Smudge',
-            'Stu'
-        ];
-        if (!in_array($username, $users)) {
+        if (!in_array($username, $this->users)) {
             throw new UsernameNotFoundException('User not found');
         }
         $user = new User();
@@ -78,5 +79,10 @@ class UserProvider implements UserProviderInterface
     public function supportsClass($class)
     {
         return User::class === $class;
+    }
+
+    public function getUsers()
+    {
+        return array_map([$this, 'loadUserByUsername'], $this->users);
     }
 }

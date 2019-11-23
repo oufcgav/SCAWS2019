@@ -13,14 +13,16 @@
             <th>Points</th>
         </tr>
         </thead>
-        {% for player in table %}
+        <tbody>
+        {% for user in table %}
             <tr>
-                <td>{#<a href="{{ path('player', { name: player.human }) }}">{{ player.human }}</a>#}</td>
-                <td>{{ player.played }}</td>
-                <td>{{ player.pints_drunk }}</td>
-                <td>{{ player.bonus_points }}</td>
-                <td>{{ player.points }}</td>
+                <td><a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a></td>
+                <td>{{ user.played }}</td>
+                <td>{{ user.pints }}</td>
+                <td>{{ user.bonusPoints }}</td>
+                <td>{{ user.points }}</td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

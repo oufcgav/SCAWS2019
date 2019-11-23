@@ -14,6 +14,23 @@ class User implements UserInterface
      * @var string The hashed password
      */
     private $password;
+    /**
+     * @var int
+     */
+    private $played = 0;
+    /**
+     * @var int
+     */
+    private $pints = 0;
+    /**
+     * @var int
+     */
+    private $bonusPoints = 0;
+    /**
+     * @var int
+     */
+    private $points = 0;
+
 
     /**
      * A visual identifier that represents this user.
@@ -82,4 +99,25 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getPlayed(): int
+    {
+        return $this->played;
+    }
+
+    public function getPints(): int
+    {
+        return $this->pints;
+    }
+
+    public function getBonusPoints(): int
+    {
+        return $this->bonusPoints;
+    }
+
+    public function getPoints(): int
+    {
+        return $this->points;
+    }
+
 }
