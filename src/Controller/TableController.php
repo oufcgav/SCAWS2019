@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TableController extends AbstractController
 {
@@ -18,6 +19,9 @@ class TableController extends AbstractController
         $this->userProvider = $userProvider;
     }
 
+    /**
+     * @Route("/table", name="table")
+     */
     public function index()
     {
         $users = $this->userProvider->getUsers();

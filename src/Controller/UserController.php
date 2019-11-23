@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
@@ -17,6 +18,9 @@ class UserController extends AbstractController
         $this->userProvider = $userProvider;
     }
 
+    /**
+     * @Route("/user/{username}", name="user")
+     */
     public function index(string $username)
     {
         $user = $this->userProvider->loadUserByUsername($username);
