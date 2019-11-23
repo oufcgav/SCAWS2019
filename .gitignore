@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -74,7 +73,3 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-
-###> behat/symfony2-extension ###
-behat.yml
-###< behat/symfony2-extension ###
