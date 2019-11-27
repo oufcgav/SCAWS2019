@@ -1,0 +1,7 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'add_match' %}
+
+{% block content %}
+    <h4>{{ 'Add a match'|trans }}</h4>
+    {{ form(form) }}
+{% endblock %}

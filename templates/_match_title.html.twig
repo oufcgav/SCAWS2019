@@ -1,0 +1,7 @@
+{% if match %}
+    <h4>{{ match.opponent }} {% if match.location == 'Home' %}(H){% else %}(A){% endif %},
+    {{ match.date|date("D jS M") }} - {{ match.competition }}</h4>
+{% else %}
+    <h4>No current match</h4>
+    <a href="{{ path('add_match') }}">Add the next match</a>
+{% endif %}

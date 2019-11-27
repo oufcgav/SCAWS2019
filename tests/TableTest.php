@@ -2,8 +2,6 @@
 
 namespace App\Tests;
 
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-
 class TableTest extends WebTestCase
 {
 
