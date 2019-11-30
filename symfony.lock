@@ -511,6 +511,9 @@
     "twig/twig": {
         "version": "v2.11.2"
     },
+    "twitter/bootstrap": {
+        "version": "v4.3.1"
+    },
     "webmozart/assert": {
         "version": "1.4.0"
     },
