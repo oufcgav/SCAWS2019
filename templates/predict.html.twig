@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'add_prediction' %}
+
+{% block content %}
+
+    {% include "_match_title.html.twig" %}
+    <h5>Add a prediction for {{ user.username }}</h5>
+    {% if febMidweek %}
+        <div class="alert alert-warning" >
+            <button class="close" data-dismiss="alert">×</button>
+            {{ "Don't forget February midweek game rules apply!"|trans }}
+        </div>
+    {% endif %}
+    {{ form(form, {action: path('add_prediction')}) }}
+{#    Go to <a href="{{ path('simulate') }}">Prediction simulator &raquo;&raquo;</a>#}
+{% endblock %}

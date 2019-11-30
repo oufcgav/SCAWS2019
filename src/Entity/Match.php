@@ -94,6 +94,11 @@ class Match
         return $this;
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('opponent', new NotBlank());

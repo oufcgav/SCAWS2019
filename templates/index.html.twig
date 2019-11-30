@@ -3,4 +3,12 @@
 
 {% block content %}
     {{ include('_match_title.html.twig') }}
+    <h5>Predictions</h5>
+    <ul>
+        {% for prediction in predictions %}
+            <li>{{ prediction.user }} {{ prediction.position }} {{ prediction.time }} {{ prediction.points }}pts
+                {% if prediction.atMatch %}(At game){% endif %}
+                <small>(Do you agree? {{ prediction.niceTime }})</small></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
