@@ -47,7 +47,7 @@ class Prediction
      * @var integer
      * @ORM\Column(type="integer")
      */
-    private $match_id;
+    private $matchId;
 
     /**
      * @var float
@@ -59,7 +59,7 @@ class Prediction
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $nice_time;
+    private $niceTime;
 
     public function getId(): ?int
     {
@@ -104,12 +104,12 @@ class Prediction
 
     public function getMatchId(): ?int
     {
-        return $this->match_id;
+        return $this->matchId;
     }
 
-    public function setMatchId(int $match_id): self
+    public function setMatchId(int $matchId): self
     {
-        $this->match_id = $match_id;
+        $this->matchId = $matchId;
 
         return $this;
     }
@@ -128,12 +128,12 @@ class Prediction
 
     public function getNiceTime(): ?string
     {
-        return $this->nice_time;
+        return $this->niceTime;
     }
 
-    public function setNiceTime(string $nice_time): self
+    public function setNiceTime(string $niceTime): self
     {
-        $this->nice_time = $nice_time;
+        $this->niceTime = $niceTime;
 
         return $this;
     }
@@ -154,6 +154,6 @@ class Prediction
         $metadata->addPropertyConstraint('position', new NotBlank());
         $metadata->addPropertyConstraint('time', new NotBlank());
         $metadata->addPropertyConstraint('atMatch', new NotBlank());
-        $metadata->addPropertyConstraint('nice_time', new NotBlank());
+        $metadata->addPropertyConstraint('niceTime', new NotBlank());
     }
 }

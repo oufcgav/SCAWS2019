@@ -22,6 +22,6 @@ class PredictionRepository extends ServiceEntityRepository
 
     public function findByMatch(Match $match)
     {
-        return $this->findBy(['match_id' => $match->getId()]);
+        return $this->findBy(['matchId' => $match->getId()]);
     }
 }
