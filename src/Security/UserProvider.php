@@ -46,7 +46,7 @@ class UserProvider implements UserProviderInterface
         }
         $user = new User();
         $user->setUsername($username);
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 'whing'));
+        $user->setPassword($this->passwordEncoder->encodePassword($user, ''));
         return $user;
     }
 
