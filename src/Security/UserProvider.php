@@ -13,8 +13,12 @@ class UserProvider implements UserProviderInterface
 
     private $passwordEncoder;
     private $users;
+    /**
+     * @var string
+     */
+    private $defaultPassword;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, string $defaultPassword)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->users = [
@@ -26,6 +30,7 @@ class UserProvider implements UserProviderInterface
             'Smudge',
             'Stu'
         ];
+        $this->defaultPassword = $defaultPassword;
     }
 
     /**
@@ -46,7 +51,7 @@ class UserProvider implements UserProviderInterface
         }
         $user = new User();
         $user->setUsername($username);
-        $user->setPassword($this->passwordEncoder->encodePassword($user, ''));
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $this->defaultPassword));
         return $user;
     }
 
