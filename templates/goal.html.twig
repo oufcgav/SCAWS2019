@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'add_goal' %}
+
+{% block content %}
+
+    {% include "_match_title.html.twig" %}
+    <h5>Add goal</h5>
+    {{ form(form, {action: path('add_goal')}) }}
+{% endblock %}

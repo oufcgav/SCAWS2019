@@ -11,4 +11,14 @@
                 <small>(Do you agree? {{ prediction.niceTime }})</small></li>
         {% endfor %}
     </ul>
+
+    {% if goals|length > 0 %}
+        <h5>Goals</h5>
+        <ul id="goals-list">
+            {% for goal in goals %}
+                <li>{{ goal.scorer }}: {{ goal.timing }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 {% endblock %}

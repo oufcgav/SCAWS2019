@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Web;
 
 class LoginTest extends WebTestCase
 {
