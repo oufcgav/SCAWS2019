@@ -52,15 +52,15 @@
 
 <div class="container">
     <div id="main" role="main" class="container">
-        {% set alertTypeAvaillable = [ 'info', 'success', 'warning', 'error'] %}
-        {% for alert in alertTypeAvaillable %}
-            {% for message in app.session.getFlashBag.get(alert) %}
-                <div class="alert alert-{{ alert }}" >
+        {% for label, messages in app.flashes(['error', 'info', 'success']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}" >
                     <button class="close" data-dismiss="alert">×</button>
                     {{ message|trans }}
                 </div>
             {% endfor %}
         {% endfor %}
+
         {% block content %}
         {% endblock %}
     </div>

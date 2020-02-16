@@ -35,6 +35,7 @@ class PredictionController extends AbstractController
     {
         $nextMatch = $this->fixtureList->findNextMatch();
         if (!$nextMatch) {
+            $this->addFlash('error', 'You cannot add a prediction as there is no current match.');
             return $this->redirectToRoute('homepage');
         }
         $prediction = (new Prediction())
