@@ -120,4 +120,11 @@ class User implements UserInterface
         return $this->points;
     }
 
+    public function setTableData(int $played, int $pints, int $bonusPoints, int $points)
+    {
+        $this->played = $played;
+        $this->pints = $pints;
+        $this->bonusPoints = $bonusPoints;
+        $this->points = $points;
+    }
 }

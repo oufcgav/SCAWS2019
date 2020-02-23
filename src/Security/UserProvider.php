@@ -90,4 +90,9 @@ class UserProvider implements UserProviderInterface
     {
         return array_map([$this, 'loadUserByUsername'], $this->users);
     }
+
+    public function listUsernames()
+    {
+        return array_combine($this->users, $this->users);
+    }
 }

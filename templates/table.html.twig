@@ -15,10 +15,10 @@
         </thead>
         <tbody>
         {% for user in table %}
-            <tr>
+            <tr id="{{ user.username }}">
                 <td><a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a></td>
                 <td>{{ user.played }}</td>
-                <td>{{ user.pints }}</td>
+                <td class="pints">{{ user.pints }}</td>
                 <td>{{ user.bonusPoints }}</td>
                 <td>{{ user.points }}</td>
             </tr>

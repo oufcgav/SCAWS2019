@@ -23,16 +23,7 @@ class PredictionTest extends WebTestCase
     public function testAddNewPrediction()
     {
         $client = $this->login();
-        $container = $client->getContainer();
-        $em = $container->get('doctrine.orm.entity_manager');
-        $prediction = (new Match())
-            ->setOpponent('Predictable')
-            ->setDate(new \DateTimeImmutable())
-            ->setLocation('Home')
-            ->setCompetition('League')
-        ;
-        $em->persist($prediction);
-        $em->flush();
+        $client = $this->addMatch($client);
 
         $index = $client->request('GET', '/');
         $link = $index

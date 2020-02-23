@@ -42,23 +42,4 @@ class GoalTest extends WebTestCase
         $this->assertContains($timing, $client->getResponse()->getContent());
     }
 
-    protected function addMatch(KernelBrowser $client): KernelBrowser
-    {
-        $index = $client->request('GET', '/');
-        $link = $index
-            ->filter('a:contains("Add match")')
-            ->eq(0)
-            ->link();
-        $match = $client->click($link);
-        $form = $match->selectButton('Add')->form();
-
-        $form['match[opponent]'] = $opposition = uniqid('team');
-        $form['match[date]'] = date('Y-m-d');
-        $form['match[location]'] = 'Home';
-        $form['match[competition]'] = 'League';
-
-        $client->submit($form);
-
-        return $client;
-    }
 }

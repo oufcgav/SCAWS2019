@@ -34,12 +34,12 @@
             <div class="nav-collapse">
                 <ul class="nav">
                     <li {% if 'table' == active %}class="active"{% endif %}><a href="{{ path('table') }}">{{ 'Table'|trans }}</a></li>
-                    <li {% if 'add_prediction' == active %}class="active"{% endif %}><a href="{{ path('add_prediction') }}">Add prediction</a></li>
-                    <li {% if 'add_goal' == active %}class="active"{% endif %}><a href="{{ path('add_goal') }}">Add goal</a></li>
-                    <li {% if 'add_match' == active %}class="active"{% endif %}><a href="{{ path('add_match') }}">Add match</a></li>
-                    {#<li {% if 'add_pint' == active %}class="active"{% endif %}><a href="{{ path('add_pint') }}">Add pint</a></li>#}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-{#                        <li><a href="{{ path('add_my_pint') }}"><img src="{{ app.request.basepath }}/img/pint.png" alt="I'm getting pissed" /></a></li>#}
+                        <li {% if 'add_prediction' == active %}class="active"{% endif %}><a href="{{ path('add_prediction') }}">Add prediction</a></li>
+                        <li {% if 'add_goal' == active %}class="active"{% endif %}><a href="{{ path('add_goal') }}">Add goal</a></li>
+                        <li {% if 'add_match' == active %}class="active"{% endif %}><a href="{{ path('add_match') }}">Add match</a></li>
+                        <li {% if 'add_pint' == active %}class="active"{% endif %}><a href="{{ path('add_pint') }}">Add pint</a></li>
+                        <li><a href="{{ path('add_my_pint') }}"><img src="{{ app.request.basepath }}/img/pint.png" alt="I'm getting pissed" /></a></li>
                         <li><a href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a></li>
                     {% else %}
                         <li><a href="{{ path('app_login') }}">{{ 'Login'|trans }}</a></li>

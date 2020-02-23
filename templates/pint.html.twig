@@ -1,0 +1,8 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'add_pint' %}
+
+{% block content %}
+    {% include "_match_title.html.twig" %}
+    <h5>Add a pint</h5>
+    {{ form(form, {action: path('add_pint')}) }}
+{% endblock %}
