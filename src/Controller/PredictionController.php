@@ -48,7 +48,7 @@ class PredictionController extends AbstractController
         $prediction = $this->predictions->findByMatchAndUser($nextMatch, $this->getUser());
         if (!$prediction) {
             $prediction = (new Prediction())
-                ->setMatchId($nextMatch->getId())
+                ->setMatch($nextMatch)
                 ->setUser($this->getUser()->getUsername())
             ;
         }

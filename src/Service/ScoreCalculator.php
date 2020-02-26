@@ -26,9 +26,10 @@ class ScoreCalculator
     /**
      * @param Goal $goal
      * @param Prediction[] $predictions
+     * @param bool $bonusPointsAvailable
      * @return Score[]
      */
-    public function calculate(Goal $goal, array $predictions, $bonusPointsAvailable = false): array
+    public function calculate(Goal $goal, array $predictions): array
     {
         $scores = [];
         if (empty($predictions)) {
@@ -37,6 +38,7 @@ class ScoreCalculator
 
         foreach ($predictions as $prediction) {
             $predictionScores = [];
+            $bonusPointsAvailable = $prediction->getMatch()->qualifiesForBonusPoint();
             $predictionHasAlreadyScored = $prediction->hasScored();
             if ($goal->getPosition() === $prediction->getPosition()) {
                 switch ($goal->getPosition()) {

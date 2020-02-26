@@ -52,7 +52,7 @@ class WebTestCase extends BaseWebTestCase
             ->setUser($user)
             ->setPosition($position)
             ->setTime($timing)
-            ->setMatchId($fixtureList->findNextMatch()->getId())
+            ->setMatch($fixtureList->findNextMatch())
             ->setAtMatch(true)
             ->setNiceTime('Yes');
         $em->persist($prediction);

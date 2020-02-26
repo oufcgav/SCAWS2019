@@ -62,7 +62,7 @@ class GoalController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $currentPredictions = $this->predictionRepository->findByMatch($currentMatch);
             $this->em->persist($goal);
-            $scores = $this->scoreCalculator->calculate($goal, $currentPredictions, $currentMatch->qualifiesForBonusPoint());
+            $scores = $this->scoreCalculator->calculate($goal, $currentPredictions);
             foreach ($scores as $score) {
                 $this->em->persist($score);
             }

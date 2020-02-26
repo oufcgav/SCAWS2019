@@ -46,10 +46,11 @@ class Prediction
     private $atMatch;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
+     * @var Match
+     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
-    private $matchId;
+    private $match;
 
     /**
      * @var float
@@ -116,14 +117,14 @@ class Prediction
         return $this;
     }
 
-    public function getMatchId(): ?int
+    public function getMatch(): ?Match
     {
-        return $this->matchId;
+        return $this->match;
     }
 
-    public function setMatchId(int $matchId): self
+    public function setMatch(Match $match): self
     {
-        $this->matchId = $matchId;
+        $this->match = $match;
 
         return $this;
     }
