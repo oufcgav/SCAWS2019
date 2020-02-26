@@ -32,10 +32,11 @@ class Goal
      */
     private $position = '';
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
+     * @var Match
+     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
-    private $matchId;
+    private $match;
 
     /**
      * @return mixed
@@ -69,12 +70,9 @@ class Goal
         return $this->position;
     }
 
-    /**
-     * @return int
-     */
-    public function getMatchId(): int
+    public function getMatch(): Match
     {
-        return $this->matchId;
+        return $this->match;
     }
 
     /**
@@ -118,9 +116,9 @@ class Goal
         return $this;
     }
 
-    public function setMatchId(int $matchId): self
+    public function setMatch(Match $match): self
     {
-        $this->matchId = $matchId;
+        $this->match = $match;
 
         return $this;
     }

@@ -22,6 +22,6 @@ class GoalRepository extends ServiceEntityRepository
 
     public function findByMatch(Match $match)
     {
-        return $this->findBy(['matchId' => $match->getId()]);
+        return $this->findBy(['match' => $match]);
     }
 }

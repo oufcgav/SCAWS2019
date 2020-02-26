@@ -55,7 +55,7 @@ class GoalController extends AbstractController
         }
 
         $goal = (new Goal())
-            ->setMatchId($currentMatch->getId())
+            ->setMatch($currentMatch)
         ;
         $form = $this->createForm(GoalType::class, $goal);
         $form->handleRequest($request);
