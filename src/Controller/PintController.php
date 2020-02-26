@@ -53,7 +53,7 @@ class PintController extends AbstractController
             $pint = $this->pintRepository->findByUserAndMatch($username, $currentMatch);
             if (!$pint) {
                 $pint = (new Pint())
-                    ->setMatchId($currentMatch->getId())
+                    ->setMatch($currentMatch)
                     ->setUser($username)
                 ;
             }
@@ -88,7 +88,7 @@ class PintController extends AbstractController
         $pint = $this->pintRepository->findByUserAndMatch($user->getUsername(), $currentMatch);
         if (!$pint) {
             $pint = (new Pint())
-                ->setMatchId($currentMatch->getId())
+                ->setMatch($currentMatch)
                 ->setUser($user->getUsername())
             ;
         }

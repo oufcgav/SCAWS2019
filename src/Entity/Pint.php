@@ -30,10 +30,11 @@ class Pint
     private $count = 0;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
+     * @var Match
+     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
-    private $matchId;
+    private $match;
 
     public function getId(): ?int
     {
@@ -52,14 +53,14 @@ class Pint
         return $this;
     }
 
-    public function getMatchId(): ?int
+    public function getMatch(): ?Match
     {
-        return $this->matchId;
+        return $this->match;
     }
 
-    public function setMatchId(int $matchId): self
+    public function setMatch(Match $match): self
     {
-        $this->matchId = $matchId;
+        $this->match = $match;
 
         return $this;
     }
