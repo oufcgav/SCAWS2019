@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Match;
 use App\Entity\Prediction;
+use App\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -23,5 +24,10 @@ class PredictionRepository extends ServiceEntityRepository
     public function findByMatch(Match $match)
     {
         return $this->findBy(['matchId' => $match->getId()]);
+    }
+
+    public function findByMatchAndUser(Match $match, User $user)
+    {
+        return $this->findOneBy(['matchId' => $match->getId(), 'user' => $user->getUsername()]);
     }
 }

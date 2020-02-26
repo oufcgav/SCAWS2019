@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Prediction;
 use App\Form\Type\PredictionType;
 use App\Repository\FixtureList;
+use App\Repository\PredictionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,16 @@ class PredictionController extends AbstractController
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var PredictionRepository
+     */
+    private $predictions;
 
-    public function __construct(FixtureList $fixtureList, EntityManagerInterface $em)
+    public function __construct(FixtureList $fixtureList, PredictionRepository $predictions, EntityManagerInterface $em)
     {
         $this->fixtureList = $fixtureList;
         $this->em = $em;
+        $this->predictions = $predictions;
     }
 
     /**
@@ -38,10 +44,15 @@ class PredictionController extends AbstractController
             $this->addFlash('error', 'You cannot add a prediction as there is no current match.');
             return $this->redirectToRoute('homepage');
         }
-        $prediction = (new Prediction())
-            ->setMatchId($nextMatch->getId())
-            ->setUser($this->getUser()->getUsername())
-        ;
+
+        $prediction = $this->predictions->findByMatchAndUser($nextMatch, $this->getUser());
+        if (!$prediction) {
+            $prediction = (new Prediction())
+                ->setMatchId($nextMatch->getId())
+                ->setUser($this->getUser()->getUsername())
+            ;
+        }
+
         $form = $this->createForm(PredictionType::class, $prediction);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
