@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -60,6 +62,18 @@ class Prediction
      * @ORM\Column(type="string", length=255)
      */
     private $niceTime;
+
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Score", mappedBy="prediction")
+     */
+    private $scores;
+
+
+    public function __construct()
+    {
+        $this->scores = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -146,6 +160,18 @@ class Prediction
     public function setAtMatch(bool $atMatch): self
     {
         $this->atMatch = $atMatch;
+        return $this;
+    }
+
+    public function hasScored(): bool
+    {
+        return $this->scores->count() > 0;
+    }
+
+    public function addScore(Score $score): self
+    {
+        $this->scores->add($score);
+
         return $this;
     }
 
