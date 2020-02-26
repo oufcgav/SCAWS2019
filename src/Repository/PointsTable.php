@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Pint;
 use App\Security\User;
+use App\Service\ScoreCalculator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -25,26 +26,32 @@ class PointsTable extends ServiceEntityRepository
             return $user->getUsername();
         }, $users);
         $users = array_combine($usernames, $users);
-        $bonusPointType = 4;
-        /**
-         *
-        FLOOR(SUM(IFNULL((SELECT SUM(s.points) FROM scores AS s WHERE s.prediction_id=p.id AND s.reason = ?),0))) AS bonus_points,
-        SUM(IFNULL((SELECT SUM(s.points) FROM scores AS s WHERE s.prediction_id=p.id),0)) AS points,
-         */
         $sql = 'SELECT p.user,
-                       COUNT(p.id) AS played,
-                       0 AS bonus_points,
-                       0 AS points,
-                       IFNULL(
-                          (SELECT SUM(count)
-                          FROM pint
-                          WHERE pint.user = p.user),
-                          0
-                       ) AS pints_drunk
+                   COUNT(p.id) AS played,
+                   FLOOR(
+                      SUM(
+                        IFNULL(
+                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id=p.id AND s.reason = ?),
+                            0
+                        )
+                      )
+                   ) AS bonus_points,
+                   SUM(
+                        IFNULL(
+                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id=p.id),
+                            0
+                        )
+                    ) AS points,
+                   IFNULL(
+                      (SELECT SUM(count)
+                      FROM pint
+                      WHERE pint.user = p.user),
+                      0
+                   ) AS pints_drunk
                 FROM prediction AS p
                 GROUP BY p.user
                 ORDER BY points DESC, bonus_points DESC, pints_drunk DESC, played ASC, p.user ASC';
-        $stats = $this->_em->getConnection()->fetchAll($sql, [$bonusPointType]);
+        $stats = $this->_em->getConnection()->fetchAll($sql, [ScoreCalculator::BONUS_POINT]);
         foreach ($stats as $userStats) {
             /** @var User $user */
             $user = $users[$userStats['user']];

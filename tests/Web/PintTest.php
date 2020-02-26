@@ -71,20 +71,4 @@ class PintTest extends WebTestCase
         ;
     }
 
-    private function addPrediction(KernelBrowser $client, $user)
-    {
-        $container = $client->getContainer();
-        $fixtureList = $container->get(FixtureList::class);
-        $em = $container->get('doctrine.orm.entity_manager');
-        $prediction = (new Prediction())
-            ->setUser($user)
-            ->setPosition('Defenders')
-            ->setTime('Second half')
-            ->setMatchId($fixtureList->findNextMatch()->getId())
-            ->setAtMatch(true)
-            ->setNiceTime('Yes')
-        ;
-        $em->persist($prediction);
-        $em->flush();
-    }
 }

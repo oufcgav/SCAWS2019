@@ -2,6 +2,8 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\Prediction;
+use App\Repository\FixtureList;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 
@@ -39,5 +41,21 @@ class WebTestCase extends BaseWebTestCase
         $client->submit($form);
 
         return $client;
+    }
+
+    protected function addPrediction(KernelBrowser $client, $user, $position = 'Defenders', $timing = 'Second half')
+    {
+        $container = $client->getContainer();
+        $fixtureList = $container->get(FixtureList::class);
+        $em = $container->get('doctrine.orm.entity_manager');
+        $prediction = (new Prediction())
+            ->setUser($user)
+            ->setPosition($position)
+            ->setTime($timing)
+            ->setMatchId($fixtureList->findNextMatch()->getId())
+            ->setAtMatch(true)
+            ->setNiceTime('Yes');
+        $em->persist($prediction);
+        $em->flush();
     }
 }

@@ -99,6 +99,12 @@ class Match
         return $this->id;
     }
 
+    public function qualifiesForBonusPoint()
+    {
+        return ($this->location !== 'Home' || $this->competition !== 'League');
+    }
+
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('opponent', new NotBlank());

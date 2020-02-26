@@ -2,7 +2,6 @@
 
 namespace App\Tests\Web;
 
-use App\Entity\Match;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 
