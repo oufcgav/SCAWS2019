@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Match;
 use App\Form\Type\MatchType;
+use App\Repository\SeasonList;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +17,15 @@ class MatchController extends AbstractController
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var SeasonList
+     */
+    private $seasonList;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, SeasonList $seasonList)
     {
         $this->em = $em;
+        $this->seasonList = $seasonList;
     }
 
     /**
@@ -31,6 +37,7 @@ class MatchController extends AbstractController
         $form = $this->createForm(MatchType::class, $match);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $match->setSeason($this->seasonList->findCurrentSeason());
             $this->em->persist($match);
             $this->em->flush();
             return $this->redirectToRoute('homepage');

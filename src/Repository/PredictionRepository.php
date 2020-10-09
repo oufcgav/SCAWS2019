@@ -6,7 +6,7 @@ use App\Entity\Match;
 use App\Entity\Prediction;
 use App\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Prediction|null find($id, $lockMode = null, $lockVersion = null)

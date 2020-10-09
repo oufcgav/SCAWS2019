@@ -6,7 +6,7 @@ use App\Entity\Pint;
 use App\Security\User;
 use App\Service\ScoreCalculator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 
 class PointsTable extends ServiceEntityRepository

@@ -3,6 +3,7 @@
 namespace App\Tests\Web;
 
 use App\Entity\Prediction;
+use App\Entity\Season;
 use App\Repository\FixtureList;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
@@ -13,6 +14,15 @@ class WebTestCase extends BaseWebTestCase
     protected function login(): KernelBrowser
     {
         $client = WebTestCase::createClient();
+        $container = $client->getContainer();
+        $em = $container->get('doctrine.orm.default_entity_manager');
+        $season = (new Season())
+            ->setLabel('Test season')
+            ->setStartDate((new \DateTimeImmutable())->sub(new \DateInterval('P1M')))
+            ->setEndDate((new \DateTimeImmutable())->add(new \DateInterval('P1M')))
+        ;
+        $em->persist($season);
+        $em->flush();
         $login = $client->request('GET', '/login');
         $form = $login->selectButton('Sign in')->form();
 

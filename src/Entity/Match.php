@@ -39,7 +39,12 @@ class Match
      * @ORM\Column(type="string", length=255)
      */
     private $competition = '';
-
+    /**
+     * @var Season
+     * @ORM\ManyToOne(targetEntity="Season")
+     * @ORM\JoinColumn(name="season_id", referencedColumnName="id")
+     */
+    private $season;
 
     public function __construct()
     {
@@ -97,6 +102,12 @@ class Match
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setSeason(Season $season): Match
+    {
+        $this->season = $season;
+        return $this;
     }
 
     public function qualifiesForBonusPoint()
