@@ -40,6 +40,7 @@ class GoalType extends AbstractType
                     '61-75 mins' => '61-75 mins',
                     '76-90 mins' => '76-90 mins',
                     'Stoppage time' => 'Stoppage time',
+                    'Extra time/other' => 'Extra time/other',
                 ],
             ])
             ->add('add', SubmitType::class)
