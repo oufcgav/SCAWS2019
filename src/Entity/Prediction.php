@@ -43,7 +43,7 @@ class Prediction
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $atMatch;
+    private $atMatch = false;
 
     /**
      * @var Match
@@ -62,13 +62,19 @@ class Prediction
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $niceTime;
+    private $niceTime = 'no';
 
     /**
      * @var Collection
      * @ORM\OneToMany(targetEntity="Score", mappedBy="prediction")
      */
     private $scores;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $reset = false;
 
 
     public function __construct()
@@ -172,6 +178,13 @@ class Prediction
     public function addScore(Score $score): self
     {
         $this->scores->add($score);
+
+        return $this;
+    }
+
+    public function setReset(): self
+    {
+        $this->reset = true;
 
         return $this;
     }

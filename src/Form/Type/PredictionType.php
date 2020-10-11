@@ -2,37 +2,51 @@
 
 namespace App\Form\Type;
 
+use App\Repository\PredictionRepository;
+use App\Security\User;
+use App\Service\PredictionRestriction;
+use RuntimeException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Security\Core\Security;
 
 class PredictionType extends AbstractType
 {
+    /**
+     * @var Security
+     */
+    private $security;
+    /**
+     * @var PredictionRepository
+     */
+    private $predictionRestriction;
+
+
+    public function __construct(
+        Security $security,
+        PredictionRestriction $predictionRestriction
+    ) {
+        $this->security = $security;
+        $this->predictionRestriction = $predictionRestriction;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $this->security->getUser();
+        if (!$user || !$user instanceof User) {
+            throw new RuntimeException('Not logged in');
+        }
+        $availablePositions = $this->predictionRestriction->getPositions($user);
+        $availableTimes = $this->predictionRestriction->getTimings($user);
+
         $builder
             ->add('position', ChoiceType::class, [
-                'choices' => [
-                    'Goalkeeper' => 'Goalkeeper',
-                    'Defenders' => 'Defenders',
-                    'Midfielders' => 'Midfielders',
-                    'Strikers' => 'Strikers',
-                ],
+                'choices' => $availablePositions,
             ])
             ->add('time', ChoiceType::class,  [
-                'choices' => [
-                    'First half' => 'First half',
-                    'Second half' => 'Second half',
-                    '1-15 mins' => '1-15 mins',
-                    '16-30 mins' => '16-30 mins',
-                    '31-45 mins' => '31-45 mins',
-                    '46-60 mins' => '46-60 mins',
-                    '61-75 mins' => '61-75 mins',
-                    '76-90 mins' => '76-90 mins',
-                    'Stoppage time' => 'Stoppage time',
-                    'Extra time/other' => 'Extra time/other',
-                ],
+                'choices' => $availableTimes,
             ])
             ->add('atMatch', ChoiceType::class, [
                 'label' => 'Are you going to the match? ',

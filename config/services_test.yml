@@ -11,3 +11,7 @@ services:
   App\Repository\FixtureList:
     autowire: true
     public: true
+
+  App\Service\PredictionRestriction:
+    autowire: true
+    public: true
