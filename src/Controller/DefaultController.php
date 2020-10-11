@@ -25,8 +25,11 @@ class DefaultController extends AbstractController
      */
     private $goalRepository;
 
-    public function __construct(FixtureList $fixtureList, PredictionRepository $predictions, GoalRepository $goalRepository)
-    {
+    public function __construct(
+        FixtureList $fixtureList,
+        PredictionRepository $predictions,
+        GoalRepository $goalRepository
+    ) {
         $this->fixtureList = $fixtureList;
         $this->predictions = $predictions;
         $this->goalRepository = $goalRepository;

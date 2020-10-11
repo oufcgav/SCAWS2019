@@ -37,7 +37,7 @@ class Score
      * @var float
      * @ORM\Column(type="decimal")
      */
-    private $points;
+    private $points = 0;
 
 
     public function getPoints(): float

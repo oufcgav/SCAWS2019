@@ -14,13 +14,20 @@
         </tr>
         </thead>
         <tbody>
-        {% for user in table %}
+        {% for position, user in table %}
             <tr id="{{ user.username }}">
                 <td><a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a></td>
                 <td>{{ user.played }}</td>
                 <td class="pints">{{ user.pints }}</td>
                 <td>{{ user.bonusPoints }}</td>
-                <td class="points">{{ user.points }}</td>
+                <td class="points">
+                    {{ user.points }}
+                    {% if user.hasMovedUp(position) %}
+                        &nbsp;<span class="table-change badge badge-success"><i class="icon-arrow-up icon-white"></i></span>
+                    {% elseif user.hasMovedDown(position) %}
+                        &nbsp;<span class="table-change badge badge-important"><i class="icon-arrow-down icon-white"></i></span>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

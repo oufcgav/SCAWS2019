@@ -178,6 +178,7 @@ class Prediction
     public function addScore(Score $score): self
     {
         $this->scores->add($score);
+        $this->points+= $score->getPoints();
 
         return $this;
     }

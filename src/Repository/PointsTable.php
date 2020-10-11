@@ -2,30 +2,42 @@
 
 namespace App\Repository;
 
+use App\Entity\Match;
 use App\Entity\Pint;
 use App\Security\User;
 use App\Service\ScoreCalculator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 
 
 class PointsTable extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        LoggerInterface $logger
+    ) {
         parent::__construct($registry, Pint::class);
+        $this->logger = $logger;
     }
 
     /**
      * @param User[] $users
      * @return User[]
      */
-    public function loadCurrent(array $users): array
+    public function loadCurrent(array $users, ?Match $currentMatch = null): array
     {
         $usernames = array_map(function (User $user) {
             return $user->getUsername();
         }, $users);
         $users = array_combine($usernames, $users);
+        $table = [];
         $sql = 'SELECT p.user,
                    COUNT(p.id) AS played,
                    FLOOR(
@@ -42,6 +54,12 @@ class PointsTable extends ServiceEntityRepository
                             0
                         )
                     ) AS points,
+                   SUM(
+                        IFNULL(
+                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id<p.id),
+                            0
+                        )
+                    ) AS old_points,
                    IFNULL(
                       (SELECT SUM(count)
                       FROM pint
@@ -51,7 +69,7 @@ class PointsTable extends ServiceEntityRepository
                 FROM prediction AS p
                 GROUP BY p.user
                 ORDER BY points DESC, bonus_points DESC, pints_drunk DESC, played ASC, p.user ASC';
-        $stats = $this->_em->getConnection()->fetchAll($sql, [ScoreCalculator::BONUS_POINT]);
+        $stats = $this->_em->getConnection()->fetchAllAssociative($sql, [ScoreCalculator::BONUS_POINT], [ParameterType::INTEGER]);
         foreach ($stats as $userStats) {
             /** @var User $user */
             $user = $users[$userStats['user']];
@@ -61,8 +79,58 @@ class PointsTable extends ServiceEntityRepository
                 (int)$userStats['bonus_points'],
                 (int)$userStats['points']
             );
+            $table[] = $user;
+        }
+        if ($currentMatch) {
+            $sql = 'SELECT p.user,
+                   COUNT(p.id) AS played,
+                   FLOOR(
+                      SUM(
+                        IFNULL(
+                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id=p.id AND s.reason = ?),
+                            0
+                        )
+                      )
+                   ) AS bonus_points,
+                   SUM(
+                        IFNULL(
+                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id=p.id),
+                            0
+                        )
+                    ) AS points,
+                   SUM(
+                        IFNULL(
+                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id<p.id),
+                            0
+                        )
+                    ) AS old_points,
+                   IFNULL(
+                      (SELECT SUM(count)
+                      FROM pint
+                      WHERE pint.user = p.user),
+                      0
+                   ) AS pints_drunk
+                FROM prediction AS p
+                WHERE p.id < (
+                    SELECT MIN(id)
+                    FROM prediction AS old
+                    WHERE old.match_id = ?
+                )
+                GROUP BY p.user
+                ORDER BY points DESC, bonus_points DESC, pints_drunk DESC, played ASC, p.user ASC';
+            $previousTable = $this->_em->getConnection()->fetchAllAssociative(
+                $sql,
+                [ScoreCalculator::BONUS_POINT, $currentMatch->getId()],
+                [ParameterType::INTEGER, ParameterType::INTEGER]
+            );
+            foreach ($previousTable as $position => $userStats) {
+                /** @var User $user */
+                $user = $users[$userStats['user']];
+                $user->setPreviousPosition($position);
+                $this->logger->debug('Set previous table position', ['user' => $user->getUsername(), 'previousPosition' => $position]);
+            }
         }
 
-        return $users;
+        return array_values($table);
     }
 }

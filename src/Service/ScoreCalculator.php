@@ -99,6 +99,9 @@ class ScoreCalculator
                     ->setGoal($goal)
                 ;
             }
+            array_walk($predictionScores, function (Score $score) use ($prediction) {
+                $prediction->addScore($score);
+            });
             $scores = array_merge($scores, $predictionScores);
         }
 

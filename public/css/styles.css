@@ -6262,3 +6262,6 @@ select {
 ul#goals-list {
   list-style-image: url('../../img/football.png');
 }
+.table-change {
+  vertical-align: middle;
+}

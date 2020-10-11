@@ -157,6 +157,20 @@ class ScoreCalculatorTest extends TestCase
         $this->assertEquals(0, count($thirdScores));
     }
 
+    public function testUpdatesPredictionWithNewScore()
+    {
+        $calc = new ScoreCalculator();
+        $match = $this->createMatch();
+        $goal = (new Goal())
+            ->setMatch($match)
+            ->setScorer('Joshua Ruffels (D)')
+            ->setTiming('31-45 mins');
+        $prediction = $this->createPrediction('Defenders', 'First half', $match, 1, true);
+        $prediction->setPoints(2);
+        $calc->calculate($goal, [$prediction]);
+        $this->assertGreaterThan(2, $prediction->getPoints());
+    }
+
     private function createMatch($bonusPoints = false)
     {
         return (new Match())

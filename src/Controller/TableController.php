@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\FixtureList;
 use App\Repository\PointsTable;
 use App\Security\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,19 @@ class TableController extends AbstractController
      * @var PointsTable
      */
     private $pointsTable;
+    /**
+     * @var FixtureList
+     */
+    private $fixtureList;
 
-    public function __construct(UserProvider $userProvider, PointsTable $pointsTable)
-    {
+    public function __construct(
+        UserProvider $userProvider,
+        PointsTable $pointsTable,
+        FixtureList $fixtureList
+    ) {
         $this->userProvider = $userProvider;
         $this->pointsTable = $pointsTable;
+        $this->fixtureList = $fixtureList;
     }
 
     /**
@@ -30,8 +39,9 @@ class TableController extends AbstractController
      */
     public function index()
     {
+        $nextMatch = $this->fixtureList->findNextMatch();
         $users = $this->userProvider->getUsers();
-        $table = $this->pointsTable->loadCurrent($users);
+        $table = $this->pointsTable->loadCurrent($users, $nextMatch);
         return $this->render('table.html.twig', ['table' => $table]);
     }
 }
