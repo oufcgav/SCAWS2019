@@ -33,6 +33,10 @@ class User implements UserInterface
     /**
      * @var int
      */
+    private $currentPosition;
+    /**
+     * @var int
+     */
     private $previousPosition;
 
 
@@ -124,22 +128,23 @@ class User implements UserInterface
         return $this->points;
     }
 
-    public function hasMovedUp(int $newPosition): bool
+    public function hasMovedUp(): bool
     {
-        return !is_null($this->previousPosition) && $this->previousPosition > $newPosition;
+        return !is_null($this->previousPosition) && $this->previousPosition > $this->currentPosition;
     }
 
-    public function hasMovedDown(int $newPosition): bool
+    public function hasMovedDown(): bool
     {
-        return !is_null($this->previousPosition) && $this->previousPosition < $newPosition;
+        return !is_null($this->previousPosition) && $this->previousPosition < $this->currentPosition;
     }
 
-    public function setTableData(int $played, int $pints, int $bonusPoints, int $points)
+    public function setTableData(int $played, int $pints, int $bonusPoints, int $points, int $position)
     {
         $this->played = $played;
         $this->pints = $pints;
         $this->bonusPoints = $bonusPoints;
         $this->points = $points;
+        $this->currentPosition = $position;
     }
 
     public function setPreviousPosition(int $position)

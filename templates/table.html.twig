@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for position, user in table %}
+        {% for user in table %}
             <tr id="{{ user.username }}">
                 <td><a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a></td>
                 <td>{{ user.played }}</td>
@@ -22,9 +22,9 @@
                 <td>{{ user.bonusPoints }}</td>
                 <td class="points">
                     {{ user.points }}
-                    {% if user.hasMovedUp(position) %}
+                    {% if user.hasMovedUp %}
                         &nbsp;<span class="table-change badge badge-success"><i class="icon-arrow-up icon-white"></i></span>
-                    {% elseif user.hasMovedDown(position) %}
+                    {% elseif user.hasMovedDown %}
                         &nbsp;<span class="table-change badge badge-important"><i class="icon-arrow-down icon-white"></i></span>
                     {% endif %}
                 </td>

@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Match;
-use App\Entity\Pint;
+use App\Entity\Score;
 use App\Security\User;
 use App\Service\ScoreCalculator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -23,7 +23,7 @@ class PointsTable extends ServiceEntityRepository
         ManagerRegistry $registry,
         LoggerInterface $logger
     ) {
-        parent::__construct($registry, Pint::class);
+        parent::__construct($registry, Score::class);
         $this->logger = $logger;
     }
 
@@ -48,18 +48,7 @@ class PointsTable extends ServiceEntityRepository
                         )
                       )
                    ) AS bonus_points,
-                   SUM(
-                        IFNULL(
-                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id=p.id),
-                            0
-                        )
-                    ) AS points,
-                   SUM(
-                        IFNULL(
-                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id<p.id),
-                            0
-                        )
-                    ) AS old_points,
+                   SUM(p.points) AS points,
                    IFNULL(
                       (SELECT SUM(count)
                       FROM pint
@@ -70,14 +59,15 @@ class PointsTable extends ServiceEntityRepository
                 GROUP BY p.user
                 ORDER BY points DESC, bonus_points DESC, pints_drunk DESC, played ASC, p.user ASC';
         $stats = $this->_em->getConnection()->fetchAllAssociative($sql, [ScoreCalculator::BONUS_POINT], [ParameterType::INTEGER]);
-        foreach ($stats as $userStats) {
+        foreach ($stats as $position => $userStats) {
             /** @var User $user */
             $user = $users[$userStats['user']];
             $user->setTableData(
                 (int)$userStats['played'],
                 (int)$userStats['pints_drunk'],
                 (int)$userStats['bonus_points'],
-                (int)$userStats['points']
+                (int)$userStats['points'],
+                $position
             );
             $table[] = $user;
         }
@@ -92,18 +82,7 @@ class PointsTable extends ServiceEntityRepository
                         )
                       )
                    ) AS bonus_points,
-                   SUM(
-                        IFNULL(
-                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id=p.id),
-                            0
-                        )
-                    ) AS points,
-                   SUM(
-                        IFNULL(
-                            (SELECT SUM(s.points) FROM score AS s WHERE s.prediction_id<p.id),
-                            0
-                        )
-                    ) AS old_points,
+                   SUM(p.points) AS points,
                    IFNULL(
                       (SELECT SUM(count)
                       FROM pint
@@ -128,6 +107,14 @@ class PointsTable extends ServiceEntityRepository
                 $user = $users[$userStats['user']];
                 $user->setPreviousPosition($position);
                 $this->logger->debug('Set previous table position', ['user' => $user->getUsername(), 'previousPosition' => $position]);
+            }
+        }
+        foreach ($users as $user) {
+            $userInTable = array_filter($table, function (User $tableEntry) use ($user) {
+                return $tableEntry->getUsername() === $user->getUsername();
+            });
+            if (empty($userInTable)) {
+                $table[] = $user;
             }
         }
 

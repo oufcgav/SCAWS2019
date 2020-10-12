@@ -2,32 +2,14 @@
 
 namespace App\Tests\Database;
 
-use App\Entity\Match;
-use App\Entity\Prediction;
-use App\Entity\Season;
-use App\Repository\FixtureList;
+
 use App\Security\User;
 use App\Service\PredictionRestriction;
 use DateInterval;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-class PredictionRestrictionTest extends KernelTestCase
+class PredictionRestrictionTest extends BaseTestCase
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    protected function setUp()
-    {
-        self::bootKernel();
-
-        $this->em = self::$container->get('doctrine.orm.default_entity_manager');
-    }
-
 
     public function testCannotPredictSamePositionOrTime()
     {
@@ -64,45 +46,5 @@ class PredictionRestrictionTest extends KernelTestCase
         $timings = $restrictions->getTimings($user);
         $this->assertContains($position, $positions);
         $this->assertNotContains($time, $timings);
-    }
-
-    protected function createSeason(): Season
-    {
-        $season = (new Season())
-            ->setLabel('Test season')
-            ->setStartDate((new DateTimeImmutable())->sub(new DateInterval('P1M')))
-            ->setEndDate((new DateTimeImmutable())->add(new DateInterval('P1M')));
-        $this->em->persist($season);
-
-        return $season;
-    }
-
-    protected function createPrediction($user, $position = 'Defenders', $timing = 'Second half', ?Match $match = null): Prediction
-    {
-        $fixtureList = self::$container->get(FixtureList::class);
-        $prediction = (new Prediction())
-            ->setUser($user)
-            ->setPosition($position)
-            ->setTime($timing)
-            ->setMatch($match ?? $fixtureList->findNextMatch())
-            ->setAtMatch(true)
-            ->setNiceTime('Yes');
-        $this->em->persist($prediction);
-
-        return $prediction;
-    }
-
-    private function createMatch(Season $season, string $opponent, DateTimeImmutable $date): Match
-    {
-        $match = (new Match())
-            ->setSeason($season)
-            ->setCompetition('League')
-            ->setDate($date)
-            ->setLocation('Home')
-            ->setOpponent($opponent)
-        ;
-        $this->em->persist($match);
-
-        return $match;
     }
 }
