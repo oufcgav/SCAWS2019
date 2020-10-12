@@ -2,6 +2,7 @@
 
 namespace App\Tests\Database;
 
+use App\Entity\GoalTimes;
 use App\Entity\Match;
 use App\Entity\Positions;
 use App\Entity\Prediction;
@@ -44,9 +45,10 @@ class BaseTestCase extends KernelTestCase
         return $season;
     }
 
-    protected function createPrediction($user, $position = null, $timing = 'Second half', ?Match $match = null): Prediction
+    protected function createPrediction($user, $position = null, $timing = null, ?Match $match = null): Prediction
     {
         $position = $position ?? Positions::DEFENDERS()->getValue();
+        $timing = $timing ?? GoalTimes::SECOND_HALF()->getValue();
         $fixtureList = self::$container->get(FixtureList::class);
         $prediction = (new Prediction())
             ->setUser($user)

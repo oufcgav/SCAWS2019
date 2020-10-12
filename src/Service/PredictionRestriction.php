@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\GoalTimes;
 use App\Entity\Positions;
 use App\Repository\FixtureList;
 use App\Repository\PredictionRepository;
@@ -57,18 +58,8 @@ class PredictionRestriction
             $user->getUsername()
         );
         $this->logger->info('Last time predicted: ' . $lastTimePredicted);
-        $times = [
-            'First half' => 'First half',
-            'Second half' => 'Second half',
-            '1-15 mins' => '1-15 mins',
-            '16-30 mins' => '16-30 mins',
-            '31-45 mins' => '31-45 mins',
-            '46-60 mins' => '46-60 mins',
-            '61-75 mins' => '61-75 mins',
-            '76-90 mins' => '76-90 mins',
-            'Stoppage time' => 'Stoppage time',
-            'Extra time/other' => 'Extra time/other',
-        ];
+        $times = array_combine(array_values(GoalTimes::toArray()), array_values(GoalTimes::toArray()));
+
         return array_diff($times, [$lastTimePredicted]);
     }
 }

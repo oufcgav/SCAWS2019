@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\GoalTimes;
 use App\Repository\SquadList;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,24 +25,17 @@ class GoalType extends AbstractType
     {
         $squad = $this->squadList->getCurrentSquad();
         $scorers = array_combine($squad, $squad);
+        $times = array_combine(array_values(GoalTimes::toArray()), array_values(GoalTimes::toArray()));
+        $times['Extra time/other'] = 'Extra time/other';
+        unset($times[GoalTimes::FIRST_HALF()->getValue()]);
+        unset($times[GoalTimes::SECOND_HALF()->getValue()]);
 
         $builder
             ->add('scorer', ChoiceType::class, [
                 'choices' => $scorers
             ])
             ->add('timing', ChoiceType::class,  [
-                'choices' => [
-                    'First half' => 'First half',
-                    'Second half' => 'Second half',
-                    '1-15 mins' => '1-15 mins',
-                    '16-30 mins' => '16-30 mins',
-                    '31-45 mins' => '31-45 mins',
-                    '46-60 mins' => '46-60 mins',
-                    '61-75 mins' => '61-75 mins',
-                    '76-90 mins' => '76-90 mins',
-                    'Stoppage time' => 'Stoppage time',
-                    'Extra time/other' => 'Extra time/other',
-                ],
+                'choices' => $times,
             ])
             ->add('add', SubmitType::class)
         ;

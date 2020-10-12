@@ -2,6 +2,7 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\GoalTimes;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class GoalTest extends WebTestCase
@@ -34,7 +35,7 @@ class GoalTest extends WebTestCase
         $form = $match->selectButton('Add')->form();
 
         $form['goal[scorer]'] = $player = 'Dan! (S)';
-        $form['goal[timing]'] = $timing = 'Second half';
+        $form['goal[timing]'] = $timing = GoalTimes::SIXTH_FIFTEEN()->getValue();
 
         $client->submit($form);
         $client->followRedirect();

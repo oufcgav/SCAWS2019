@@ -2,6 +2,7 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\GoalTimes;
 use App\Entity\Positions;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
@@ -12,9 +13,9 @@ class ScoreTest extends WebTestCase
     {
         $client = $this->login();
         $client = $this->addMatch($client);
-        $this->addPrediction($client, 'Andy', Positions::DEFENDERS()->getValue(), 'Second half');
+        $this->addPrediction($client, 'Andy', Positions::DEFENDERS()->getValue(), GoalTimes::SECOND_HALF()->getValue());
         $currentPoints = $this->getCurrentPointsTotal($client, 'Andy');
-        $client = $this->addGoal($client, 'Dan! (S)', 'Second half');
+        $client = $this->addGoal($client, 'Dan! (S)', GoalTimes::SIXTH_FIFTEEN()->getValue());
         $newPoints = $this->getCurrentPointsTotal($client, 'Andy');
 
         $this->assertGreaterThan($currentPoints, $newPoints);

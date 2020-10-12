@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Goal;
+use App\Entity\GoalTimes;
 use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Score;
@@ -64,22 +65,22 @@ class ScoreCalculator
             $points = 0;
             if ($goal->getTiming() === $prediction->getTime()) {
                 $points = self::POINTS_TIME;
-                if ($goal->getTiming() === 'Stoppage time') {
+                if ($goal->getTiming() === GoalTimes::STOPPAGE_TIME()->getValue()) {
                     $points += self::POINTS_STOPPAGE_BONUS;
                 }
             }
             switch ($goal->getTiming()) {
-                case '1-15 mins':
-                case '16-30 mins':
-                case '31-45 mins':
-                    if ($prediction->getTime() === 'First half') {
+                case GoalTimes::FIRST_FIFTEEN()->getValue():
+                case GoalTimes::SECOND_FIFTEEN()->getValue():
+                case GoalTimes::THIRD_FIFTEEN()->getValue():
+                    if ($prediction->getTime() === GoalTimes::FIRST_HALF()->getValue()) {
                         $points = self::POINTS_HALF;
                     }
                     break;
-                case '46-60 mins':
-                case '61-75 mins':
-                case '76-90 mins':
-                    if ($prediction->getTime() === 'Second half') {
+                case GoalTimes::FOURTH_FIFTEEN()->getValue():
+                case GoalTimes::FIFTH_FIFTEEN()->getValue():
+                case GoalTimes::SIXTH_FIFTEEN()->getValue():
+                    if ($prediction->getTime() === GoalTimes::SECOND_HALF()->getValue()) {
                         $points = self::POINTS_HALF;
                     }
                     break;

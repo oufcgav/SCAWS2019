@@ -3,6 +3,7 @@
 namespace App\Tests\Unit;
 
 use App\Entity\Goal;
+use App\Entity\GoalTimes;
 use App\Entity\Match;
 use App\Entity\Positions;
 use App\Entity\Prediction;
@@ -19,7 +20,7 @@ class ScoreCalculatorTest extends TestCase
         $goal = (new Goal())
             ->setMatch($this->createMatch())
             ->setScorer('Matty Taylor (S)')
-            ->setTiming('First half');
+            ->setTiming(GoalTimes::FIRST_HALF()->getValue());
         $this->assertEmpty($calc->calculate($goal, []));
     }
 
@@ -33,8 +34,8 @@ class ScoreCalculatorTest extends TestCase
         $goal = (new Goal())
             ->setMatch($match)
             ->setScorer($scorer)
-            ->setTiming('First half');
-        $prediction = $this->createPrediction($predictedPosition, 'Second half', $match);
+            ->setTiming(GoalTimes::FIRST_HALF()->getValue());
+        $prediction = $this->createPrediction($predictedPosition, GoalTimes::SECOND_HALF()->getValue(), $match);
         $scores = $calc->calculate($goal, [$prediction]);
         $this->assertGreaterThanOrEqual(1, count($scores));
         $score = array_pop($scores);
@@ -71,10 +72,10 @@ class ScoreCalculatorTest extends TestCase
     public function dataForTimePeriods()
     {
         return [
-            'First half scores 1 point' => ['16-30 mins', 'First half', 1],
-            'Second half scores 1 point' => ['46-60 mins', 'Second half', 1],
-            'Correct 15 min period scores 3 points' => ['16-30 mins', '16-30 mins', 3],
-            'Stoppage time scores 4.5 points' => ['Stoppage time', 'Stoppage time', 4.5],
+            'First half scores 1 point' => [GoalTimes::SECOND_FIFTEEN()->getValue(), GoalTimes::FIRST_HALF()->getValue(), 1],
+            'Second half scores 1 point' => [GoalTimes::FOURTH_FIFTEEN()->getValue(), GoalTimes::SECOND_HALF()->getValue(), 1],
+            'Correct 15 min period scores 3 points' => [GoalTimes::SECOND_FIFTEEN()->getValue(), GoalTimes::SECOND_FIFTEEN()->getValue(), 3],
+            'Stoppage time scores 4.5 points' => [GoalTimes::STOPPAGE_TIME()->getValue(), GoalTimes::STOPPAGE_TIME()->getValue(), 4.5],
         ];
     }
 
@@ -85,8 +86,8 @@ class ScoreCalculatorTest extends TestCase
         $goal = (new Goal())
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
-            ->setTiming('31-45 mins');
-        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match);
+            ->setTiming(GoalTimes::THIRD_FIFTEEN()->getValue());
+        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::FIRST_HALF()->getValue(), $match);
         $scores = $calc->calculate($goal, [$prediction]);
         $this->assertGreaterThanOrEqual(2, count($scores));
     }
@@ -101,8 +102,8 @@ class ScoreCalculatorTest extends TestCase
         $goal = (new Goal())
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
-            ->setTiming('31-45 mins');
-        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match, 1, $userIsPresent);
+            ->setTiming(GoalTimes::THIRD_FIFTEEN()->getValue());
+        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::FIRST_HALF()->getValue(), $match, 1, $userIsPresent);
         if ($userHasAlreadyScored) {
             $oldScore = (new Score())
                 ->setPoints(ScoreCalculator::POINTS_STRIKERS)
@@ -134,15 +135,15 @@ class ScoreCalculatorTest extends TestCase
         $goal = (new Goal())
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
-            ->setTiming('31-45 mins');
-        $first = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match, 1, true);
-        $second = $this->createPrediction(Positions::DEFENDERS()->getValue(), '31-45 mins', $match, 2, true);
+            ->setTiming(GoalTimes::THIRD_FIFTEEN()->getValue());
+        $first = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::FIRST_HALF()->getValue(), $match, 1, true);
+        $second = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::THIRD_FIFTEEN()->getValue(), $match, 2, true);
         $oldScore = (new Score())
             ->setPoints(ScoreCalculator::POINTS_STRIKERS)
             ->setReason(ScoreCalculator::CORRECT_POSITION)
             ->setPrediction($second)
         ;
-        $third = $this->createPrediction(Positions::STRIKERS()->getValue(), '1-15 mins', $match, 3, true);
+        $third = $this->createPrediction(Positions::STRIKERS()->getValue(), GoalTimes::FIRST_FIFTEEN()->getValue(), $match, 3, true);
         $scores = $calc->calculate($goal, [$first, $second, $third]);
         $firstScores = array_filter($scores, function (Score $score) use ($first) {
             return $score->getPrediction()->getUser() === $first->getUser();
@@ -165,8 +166,8 @@ class ScoreCalculatorTest extends TestCase
         $goal = (new Goal())
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
-            ->setTiming('31-45 mins');
-        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match, 1, true);
+            ->setTiming(GoalTimes::THIRD_FIFTEEN()->getValue());
+        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::FIRST_HALF()->getValue(), $match, 1, true);
         $prediction->setPoints(2);
         $calc->calculate($goal, [$prediction]);
         $this->assertGreaterThan(2, $prediction->getPoints());

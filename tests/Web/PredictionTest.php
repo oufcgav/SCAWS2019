@@ -2,6 +2,7 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\GoalTimes;
 use App\Entity\Positions;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -25,7 +26,7 @@ class PredictionTest extends WebTestCase
         $form = $prediction->selectButton('Add')->form();
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
-        $form['prediction[time]'] = $time = 'Second half';
+        $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
         $form['prediction[atMatch]'] = 'yes';
         $form['prediction[nice_time]'] = 'no';
 
@@ -44,7 +45,7 @@ class PredictionTest extends WebTestCase
         $form = $prediction->selectButton('Add')->form();
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
-        $form['prediction[time]'] = $time = 'Second half';
+        $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
         $form['prediction[atMatch]'] = 'yes';
         $form['prediction[nice_time]'] = 'no';
 
