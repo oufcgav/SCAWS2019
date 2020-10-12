@@ -66,7 +66,7 @@ class PointsTable extends ServiceEntityRepository
                 (int)$userStats['played'],
                 (int)$userStats['pints_drunk'],
                 (int)$userStats['bonus_points'],
-                (int)$userStats['points'],
+                (float)$userStats['points'],
                 $position
             );
             $table[] = $user;

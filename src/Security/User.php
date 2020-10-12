@@ -27,7 +27,7 @@ class User implements UserInterface
      */
     private $bonusPoints = 0;
     /**
-     * @var int
+     * @var float
      */
     private $points = 0;
     /**
@@ -123,7 +123,7 @@ class User implements UserInterface
         return $this->bonusPoints;
     }
 
-    public function getPoints(): int
+    public function getPoints(): float
     {
         return $this->points;
     }
@@ -138,7 +138,7 @@ class User implements UserInterface
         return !is_null($this->previousPosition) && $this->previousPosition < $this->currentPosition;
     }
 
-    public function setTableData(int $played, int $pints, int $bonusPoints, int $points, int $position)
+    public function setTableData(int $played, int $pints, int $bonusPoints, float $points, int $position)
     {
         $this->played = $played;
         $this->pints = $pints;

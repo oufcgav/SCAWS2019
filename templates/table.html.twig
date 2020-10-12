@@ -21,7 +21,7 @@
                 <td class="pints">{{ user.pints }}</td>
                 <td>{{ user.bonusPoints }}</td>
                 <td class="points">
-                    {{ user.points }}
+                    {{ user.points|number_format(1) }}
                     {% if user.hasMovedUp %}
                         &nbsp;<span class="table-change badge badge-success"><i class="icon-arrow-up icon-white"></i></span>
                     {% elseif user.hasMovedDown %}

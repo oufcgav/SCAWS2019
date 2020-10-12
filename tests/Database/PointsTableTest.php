@@ -43,7 +43,7 @@ class PointsTableTest extends BaseTestCase
             ->setPoints($this->faker->numberBetween(0, 6));
         $this->createPrediction('Deadly')
             ->setPoints($this->faker->numberBetween(0, 6));
-        $this->createPrediction('Smudge')
+        $this->createPrediction('Smudger')
             ->setPoints($this->faker->numberBetween(0, 6));
         $this->em->flush();
 
@@ -67,7 +67,7 @@ class PointsTableTest extends BaseTestCase
         $this->createPrediction('Deadly', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
             ->setPoints(2)
         ;
-        $this->createPrediction('Smudge', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
+        $this->createPrediction('Smudger', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
             ->setPoints(1)
         ;
         $secondMatch = $this->createMatch($season, 'Current Match', new DateTimeImmutable());
@@ -78,7 +78,7 @@ class PointsTableTest extends BaseTestCase
         $this->createPrediction('Deadly')
             ->setPoints(1)
         ;
-        $this->createPrediction('Smudge')
+        $this->createPrediction('Smudger')
             ->setPoints(3)
         ;
         $this->em->flush();
@@ -91,7 +91,7 @@ class PointsTableTest extends BaseTestCase
                     $this->assertTrue($user->hasMovedDown());
                     $this->assertFalse($user->hasMovedUp());
                     break;
-                case 'Smudge':
+                case 'Smudger':
                     $this->assertFalse($user->hasMovedDown());
                     $this->assertTrue($user->hasMovedUp());
                     break;
