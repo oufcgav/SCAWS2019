@@ -3,6 +3,7 @@
 namespace App\Tests\Database;
 
 
+use App\Entity\Positions;
 use App\Security\User;
 use App\Service\PredictionRestriction;
 use DateInterval;
@@ -17,7 +18,7 @@ class PredictionRestrictionTest extends BaseTestCase
         $season = $this->createSeason();
         $oldMatch = $this->createMatch($season, 'Last match', (new DateTimeImmutable())->sub(new DateInterval('P1W')));
         $this->createMatch($season, 'Next match', (new DateTimeImmutable())->add(new DateInterval('P1W')));
-        $position = 'Midfielders';
+        $position = Positions::MIDFIELDERS()->getValue();
         $time = 'Second half';
         $this->createPrediction('Andy', $position, $time, $oldMatch);
         $this->em->flush();
@@ -35,7 +36,7 @@ class PredictionRestrictionTest extends BaseTestCase
         $season = $this->createSeason();
         $oldMatch = $this->createMatch($season, 'Last match', (new DateTimeImmutable())->sub(new DateInterval('P1W')));
         $this->createMatch($season, 'Next match', (new DateTimeImmutable())->add(new DateInterval('P1W')));
-        $position = 'Midfielders';
+        $position = Positions::MIDFIELDERS()->getValue();
         $time = 'Second half';
         $prediction = $this->createPrediction('Andy', $position, $time, $oldMatch);
         $prediction->setReset();

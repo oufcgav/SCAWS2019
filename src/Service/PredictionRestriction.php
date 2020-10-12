@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Positions;
 use App\Repository\FixtureList;
 use App\Repository\PredictionRepository;
 use App\Security\User;
@@ -43,12 +44,7 @@ class PredictionRestriction
         );
         $this->logger->info('Positions excluded: ' . implode(', ', $positionsExcluded));
 
-        $positions = [
-            'Goalkeeper' => 'Goalkeeper',
-            'Defenders' => 'Defenders',
-            'Midfielders' => 'Midfielders',
-            'Strikers' => 'Strikers',
-        ];
+        $positions = array_combine(array_values(Positions::toArray()), array_values(Positions::toArray()));
 
         return array_diff($positions, $positionsExcluded);
     }

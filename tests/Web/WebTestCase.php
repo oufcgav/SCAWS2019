@@ -2,6 +2,7 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Season;
 use App\Repository\FixtureList;
@@ -53,8 +54,9 @@ class WebTestCase extends BaseWebTestCase
         return $client;
     }
 
-    protected function addPrediction(KernelBrowser $client, $user, $position = 'Defenders', $timing = 'Second half')
+    protected function addPrediction(KernelBrowser $client, $user, $position = null, $timing = 'Second half')
     {
+        $position = $position ?? Positions::DEFENDERS()->getValue();
         $container = $client->getContainer();
         $fixtureList = $container->get(FixtureList::class);
         $em = $container->get('doctrine.orm.entity_manager');

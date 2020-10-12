@@ -2,6 +2,7 @@
 
 namespace App\Tests\Database;
 
+use App\Entity\Positions;
 use App\Repository\PointsTable;
 use App\Security\User;
 use App\Security\UserProvider;
@@ -60,13 +61,13 @@ class PointsTableTest extends BaseTestCase
         $season = $this->createSeason();
         $firstMatch = $this->createMatch($season, 'First match', (new DateTimeImmutable())->sub(new \DateInterval('P1W')));
         $this->em->flush();
-        $this->createPrediction('Andy', 'Defenders', 'Second Half', $firstMatch)
+        $this->createPrediction('Andy', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
             ->setPoints(3)
         ;
-        $this->createPrediction('Deadly', 'Defenders', 'Second Half', $firstMatch)
+        $this->createPrediction('Deadly', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
             ->setPoints(2)
         ;
-        $this->createPrediction('Smudge', 'Defenders', 'Second Half', $firstMatch)
+        $this->createPrediction('Smudge', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
             ->setPoints(1)
         ;
         $secondMatch = $this->createMatch($season, 'Current Match', new DateTimeImmutable());

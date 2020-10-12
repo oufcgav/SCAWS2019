@@ -5,6 +5,7 @@
         "php": "^7.3.11",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "myclabs/php-enum": "^1.7",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",

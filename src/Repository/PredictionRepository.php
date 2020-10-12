@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Match;
+use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -103,7 +104,7 @@ class PredictionRepository extends ServiceEntityRepository
         );
         $positionsExcluded = [];
         foreach ($positionsPredicted as $positionPredicted) {
-            if ($positionPredicted['position'] === 'Goalkeeper'
+            if ($positionPredicted['position'] === Positions::GOALKEEPER()->getValue()
                 || $positionPredicted['reset'] === '1') {
                 break;
             }

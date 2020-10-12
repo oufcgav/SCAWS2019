@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Goal;
+use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Score;
 
@@ -42,13 +43,13 @@ class ScoreCalculator
             $predictionHasAlreadyScored = $prediction->hasScored();
             if ($goal->getPosition() === $prediction->getPosition()) {
                 switch ($goal->getPosition()) {
-                    case 'Defenders':
+                    case Positions::DEFENDERS()->getValue():
                         $points = self::POINTS_DEFENDERS;
                         break;
-                    case 'Midfielders':
+                    case Positions::MIDFIELDERS()->getValue():
                         $points = self::POINTS_MIDFIELDERS;
                         break;
-                    case 'Strikers':
+                    case Positions::STRIKERS()->getValue():
                     default:
                         $points = self::POINTS_STRIKERS;
                         break;

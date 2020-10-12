@@ -88,16 +88,16 @@ class Goal
         $positionCode = trim($matches[0], '()');
         switch ($positionCode) {
             case 'GK':
-                $this->position = 'Goalkeeper';
+                $this->position = Positions::GOALKEEPER()->getValue();
                 break;
             case 'D':
-                $this->position = 'Defenders';
+                $this->position = Positions::DEFENDERS()->getValue();
                 break;
             case 'M':
-                $this->position = 'Midfielders';
+                $this->position = Positions::MIDFIELDERS()->getValue();
                 break;
             case 'S':
-                $this->position = 'Strikers';
+                $this->position = Positions::STRIKERS()->getValue();
                 break;
             case 'O':
                 $this->position = 'Own goal';

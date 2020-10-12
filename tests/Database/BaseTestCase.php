@@ -3,6 +3,7 @@
 namespace App\Tests\Database;
 
 use App\Entity\Match;
+use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Season;
 use App\Repository\FixtureList;
@@ -43,8 +44,9 @@ class BaseTestCase extends KernelTestCase
         return $season;
     }
 
-    protected function createPrediction($user, $position = 'Defenders', $timing = 'Second half', ?Match $match = null): Prediction
+    protected function createPrediction($user, $position = null, $timing = 'Second half', ?Match $match = null): Prediction
     {
+        $position = $position ?? Positions::DEFENDERS()->getValue();
         $fixtureList = self::$container->get(FixtureList::class);
         $prediction = (new Prediction())
             ->setUser($user)

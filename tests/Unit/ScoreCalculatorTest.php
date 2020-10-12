@@ -4,6 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Entity\Goal;
 use App\Entity\Match;
+use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Score;
 use App\Service\ScoreCalculator;
@@ -43,9 +44,9 @@ class ScoreCalculatorTest extends TestCase
     public function dataForCorrectPosition()
     {
         return [
-            'Strikers score 1 point' => ['Matty Taylor (S)', 'Strikers', 1],
-            'Midfielders score 2 points' => ['Cameron Brannagan (M)', 'Midfielders', 2],
-            'Defenders score 3 points' => ['Joshua Ruffels (D)', 'Defenders', 3],
+            'Strikers score 1 point' => ['Matty Taylor (S)', Positions::STRIKERS()->getValue(), 1],
+            'Midfielders score 2 points' => ['Cameron Brannagan (M)', Positions::MIDFIELDERS()->getValue(), 2],
+            'Defenders score 3 points' => ['Joshua Ruffels (D)', Positions::DEFENDERS()->getValue(), 3],
         ];
     }
 
@@ -60,7 +61,7 @@ class ScoreCalculatorTest extends TestCase
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
             ->setTiming($timeScored);
-        $prediction = $this->createPrediction('Strikers', $timePredicted, $match);
+        $prediction = $this->createPrediction(Positions::STRIKERS()->getValue(), $timePredicted, $match);
         $scores = $calc->calculate($goal, [$prediction]);
         $this->assertGreaterThanOrEqual(1, count($scores));
         $score = array_pop($scores);
@@ -85,7 +86,7 @@ class ScoreCalculatorTest extends TestCase
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
             ->setTiming('31-45 mins');
-        $prediction = $this->createPrediction('Defenders', 'First half', $match);
+        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match);
         $scores = $calc->calculate($goal, [$prediction]);
         $this->assertGreaterThanOrEqual(2, count($scores));
     }
@@ -101,7 +102,7 @@ class ScoreCalculatorTest extends TestCase
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
             ->setTiming('31-45 mins');
-        $prediction = $this->createPrediction('Defenders', 'First half', $match, 1, $userIsPresent);
+        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match, 1, $userIsPresent);
         if ($userHasAlreadyScored) {
             $oldScore = (new Score())
                 ->setPoints(ScoreCalculator::POINTS_STRIKERS)
@@ -134,14 +135,14 @@ class ScoreCalculatorTest extends TestCase
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
             ->setTiming('31-45 mins');
-        $first = $this->createPrediction('Defenders', 'First half', $match, 1, true);
-        $second = $this->createPrediction('Defenders', '31-45 mins', $match, 2, true);
+        $first = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match, 1, true);
+        $second = $this->createPrediction(Positions::DEFENDERS()->getValue(), '31-45 mins', $match, 2, true);
         $oldScore = (new Score())
             ->setPoints(ScoreCalculator::POINTS_STRIKERS)
             ->setReason(ScoreCalculator::CORRECT_POSITION)
             ->setPrediction($second)
         ;
-        $third = $this->createPrediction('Strikers', '1-15 mins', $match, 3, true);
+        $third = $this->createPrediction(Positions::STRIKERS()->getValue(), '1-15 mins', $match, 3, true);
         $scores = $calc->calculate($goal, [$first, $second, $third]);
         $firstScores = array_filter($scores, function (Score $score) use ($first) {
             return $score->getPrediction()->getUser() === $first->getUser();
@@ -165,7 +166,7 @@ class ScoreCalculatorTest extends TestCase
             ->setMatch($match)
             ->setScorer('Joshua Ruffels (D)')
             ->setTiming('31-45 mins');
-        $prediction = $this->createPrediction('Defenders', 'First half', $match, 1, true);
+        $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), 'First half', $match, 1, true);
         $prediction->setPoints(2);
         $calc->calculate($goal, [$prediction]);
         $this->assertGreaterThan(2, $prediction->getPoints());

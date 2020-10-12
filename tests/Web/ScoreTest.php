@@ -2,6 +2,7 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\Positions;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class ScoreTest extends WebTestCase
@@ -11,7 +12,7 @@ class ScoreTest extends WebTestCase
     {
         $client = $this->login();
         $client = $this->addMatch($client);
-        $this->addPrediction($client, 'Andy', 'Defenders', 'Second half');
+        $this->addPrediction($client, 'Andy', Positions::DEFENDERS()->getValue(), 'Second half');
         $currentPoints = $this->getCurrentPointsTotal($client, 'Andy');
         $client = $this->addGoal($client, 'Dan! (S)', 'Second half');
         $newPoints = $this->getCurrentPointsTotal($client, 'Andy');

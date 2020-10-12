@@ -2,6 +2,7 @@
 
 namespace App\Tests\Web;
 
+use App\Entity\Positions;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -23,7 +24,7 @@ class PredictionTest extends WebTestCase
         $prediction = $this->getAddPredictionForm($client);
         $form = $prediction->selectButton('Add')->form();
 
-        $form['prediction[position]'] = $position = 'Midfielders';
+        $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = 'Second half';
         $form['prediction[atMatch]'] = 'yes';
         $form['prediction[nice_time]'] = 'no';
@@ -42,7 +43,7 @@ class PredictionTest extends WebTestCase
         $prediction = $this->getAddPredictionForm($client);
         $form = $prediction->selectButton('Add')->form();
 
-        $form['prediction[position]'] = $position = 'Midfielders';
+        $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = 'Second half';
         $form['prediction[atMatch]'] = 'yes';
         $form['prediction[nice_time]'] = 'no';

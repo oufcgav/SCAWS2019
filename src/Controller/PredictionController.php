@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Form\Type\PredictionType;
 use App\Repository\FixtureList;
@@ -56,7 +57,7 @@ class PredictionController extends AbstractController
         $form = $this->createForm(PredictionType::class, $prediction);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($prediction->getPosition() === 'Goalkeeper') {
+            if ($prediction->getPosition() === Positions::GOALKEEPER()->getValue()) {
                 $prediction->setReset();
             } else {
                 $lastPredictions = $this->predictions->getLastPredictions($nextMatch, $this->getUser()->getUsername(), 2);
