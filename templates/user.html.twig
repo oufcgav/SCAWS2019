@@ -4,9 +4,17 @@
 {% block content %}
     <h4>All predictions for {{ user.username }}</h4>
     <ul>
-        {% for prediction in predictions %}
-        <li>vs {{ prediction.opposition }} {% if prediction.location == 'Home' %}(H){% else %}(A){% endif %} on {{ prediction.match_date|date("D jS M") }}
-            {{ prediction.position }} {{ prediction.time }} - {{ prediction.points }}pts</li>
+        {% for data in predictions %}
+        <li>vs {{ data.match.opponent }} {% if data.match.location == 'Home' %}(H){% else %}(A){% endif %} on {{ data.match.date|date("D jS M") }}
+            {{ data.prediction.position }} {{ data.prediction.time }} - {{ data.prediction.points }}pts
+            <ul>
+                {% for goalData in data.goals %}
+                    <li>
+                        {{ goalData.goal.scorer }}, {{ goalData.goal.timing }} - {{ goalData.points }} ({{ goalData.reasons }})
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
         {% else %}
         <li>No predictions logged.</li>
         {% endfor %}

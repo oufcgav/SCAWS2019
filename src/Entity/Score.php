@@ -80,4 +80,10 @@ class Score
         $this->reason = $reason;
         return $this;
     }
+
+    public function getGoal(): Goal
+    {
+        return $this->goal;
+    }
+
 }

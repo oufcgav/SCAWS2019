@@ -109,4 +109,20 @@ class ScoreCalculator
 
         return $scores;
     }
+
+    public function getReasonName(int $reason)
+    {
+        switch ($reason) {
+            case self::CORRECT_HALF:
+                return 'Correct half';
+            case self::CORRECT_TIME:
+                return 'Correct 15 min time period';
+            case self::CORRECT_POSITION:
+                return 'Correct position';
+            case self::BONUS_POINT:
+                return 'Bonus point';
+            default:
+                return 'Unknown';
+        }
+    }
 }

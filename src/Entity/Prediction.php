@@ -190,6 +190,12 @@ class Prediction
         return $this;
     }
 
+    public function getScores(): array
+    {
+        return $this->scores->toArray();
+    }
+
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('position', new NotBlank());

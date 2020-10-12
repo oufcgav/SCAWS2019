@@ -41,6 +41,11 @@ class PredictionRepository extends ServiceEntityRepository
         return $this->findOneBy(['match' => $match, 'user' => $user->getUsername()]);
     }
 
+    public function findByUser(User $user)
+    {
+        return $this->findBy(['user' => $user->getUsername()]);
+    }
+
     public function getLastTimePeriodPredicted(Match $currentMatch, string $human) {
         $sql = "SELECT time 
                     FROM prediction p
