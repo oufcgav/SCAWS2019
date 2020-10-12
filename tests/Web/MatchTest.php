@@ -2,7 +2,6 @@
 
 namespace App\Tests\Web;
 
-
 class MatchTest extends WebTestCase
 {
     public function testNoMatchIsDisplayedByDefault()

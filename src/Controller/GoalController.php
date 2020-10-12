@@ -51,6 +51,7 @@ class GoalController extends AbstractController
         $currentMatch = $this->fixtureList->findNextMatch();
         if (!$currentMatch) {
             $this->addFlash('error', 'You cannot add a goal as there is no current match.');
+
             return $this->redirectToRoute('homepage');
         }
 
@@ -67,6 +68,7 @@ class GoalController extends AbstractController
                 $this->em->persist($score);
             }
             $this->em->flush();
+
             return $this->redirectToRoute('homepage');
         }
 

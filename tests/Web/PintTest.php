@@ -2,9 +2,6 @@
 
 namespace App\Tests\Web;
 
-use App\Entity\Match;
-use App\Entity\Prediction;
-use App\Repository\FixtureList;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class PintTest extends WebTestCase
@@ -63,12 +60,13 @@ class PintTest extends WebTestCase
         $this->assertGreaterThan($currentPints, $newPints);
     }
 
-    private function getCurrentPintsTotal(KernelBrowser $client, $user): int {
+    private function getCurrentPintsTotal(KernelBrowser $client, $user): int
+    {
         $table = $client->request('GET', '/table');
-        return (int)$table->filter("tr#$user > td.pints")
+
+        return (int) $table->filter("tr#$user > td.pints")
             ->first()
             ->text()
         ;
     }
-
 }

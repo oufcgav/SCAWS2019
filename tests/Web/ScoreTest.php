@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class ScoreTest extends WebTestCase
 {
-
     public function testScoresAreAddedAfterGoal()
     {
         $client = $this->login();
@@ -21,9 +20,11 @@ class ScoreTest extends WebTestCase
         $this->assertGreaterThan($currentPoints, $newPoints);
     }
 
-    private function getCurrentPointsTotal(KernelBrowser $client, $user): int {
+    private function getCurrentPointsTotal(KernelBrowser $client, $user): int
+    {
         $table = $client->request('GET', '/table');
-        return (int)$table->filter("tr#$user > td.points")
+
+        return (int) $table->filter("tr#$user > td.points")
             ->first()
             ->text()
         ;

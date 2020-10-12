@@ -46,8 +46,9 @@ class PredictionRepository extends ServiceEntityRepository
         return $this->findBy(['user' => $user->getUsername()]);
     }
 
-    public function getLastTimePeriodPredicted(Match $currentMatch, string $human) {
-        $sql = "SELECT time 
+    public function getLastTimePeriodPredicted(Match $currentMatch, string $human)
+    {
+        $sql = 'SELECT time 
                     FROM prediction p
                     WHERE p.user = ?
                     AND p.match_id = (
@@ -56,32 +57,36 @@ class PredictionRepository extends ServiceEntityRepository
                         WHERE date < ?
                         ORDER BY date DESC
                         LIMIT 1
-                    )";
-        return $lastTimePredicted = $this->_em->getConnection()->fetchOne($sql,
+                    )';
+
+        return $this->_em->getConnection()->fetchOne($sql,
             [
                 $human,
-                $currentMatch->getDate()->format('Y-m-d')
+                $currentMatch->getDate()->format('Y-m-d'),
             ],
             [
                 ParameterType::STRING,
-                ParameterType::STRING
+                ParameterType::STRING,
             ]
         );
     }
 
-    public function getExcludedPositions(Match $currentMatch, $human) {
+    public function getExcludedPositions(Match $currentMatch, $human)
+    {
         $positionsExcluded = $this->getLastPredictions($currentMatch, $human, 3);
         $this->logger->info('Excluding positions:', ['excluded' => $positionsExcluded]);
+
         return count($positionsExcluded) < 3 ? $positionsExcluded : [];
     }
 
-    public function getLastPredictions(Match $currentMatch, $human, $numPredictions) {
-        $this->logger->info("Getting last  predictions", ['num' => $numPredictions, 'user' => $human, 'match' => $currentMatch]);
-        $sql = "SELECT id 
+    public function getLastPredictions(Match $currentMatch, $human, $numPredictions)
+    {
+        $this->logger->info('Getting last  predictions', ['num' => $numPredictions, 'user' => $human, 'match' => $currentMatch]);
+        $sql = 'SELECT id 
                 FROM `match` m
                 WHERE date < ?
                 ORDER BY date DESC
-                LIMIT ?";
+                LIMIT ?';
 
         $lastMatches = $this->_em->getConnection()->fetchAllAssociative($sql,
             [$currentMatch->getDate()->format('Y-m-d'), $numPredictions],
@@ -91,20 +96,20 @@ class PredictionRepository extends ServiceEntityRepository
             return $lastMatch['id'];
         }, $lastMatches);
         $this->logger->info('Predictions for matches', ['exclude' => $matchesToExclude]);
-        $sql = "SELECT position, reset 
+        $sql = 'SELECT position, reset 
                 FROM prediction p
                 WHERE p.user = ?
                 AND p.match_id IN (?)
-                ORDER BY p.match_id DESC";
+                ORDER BY p.match_id DESC';
 
         $positionsPredicted = $this->_em->getConnection()->fetchAllAssociative($sql,
             [
                 $human,
-                $matchesToExclude
+                $matchesToExclude,
             ],
             [
                 ParameterType::STRING,
-                Connection::PARAM_INT_ARRAY
+                Connection::PARAM_INT_ARRAY,
             ]
         );
         $positionsExcluded = [];
@@ -115,6 +120,7 @@ class PredictionRepository extends ServiceEntityRepository
             }
             $positionsExcluded[] = $positionPredicted['position'];
         }
+
         return array_unique($positionsExcluded);
     }
 }

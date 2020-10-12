@@ -11,7 +11,6 @@ use Doctrine\DBAL\ParameterType;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 
-
 class PointsTable extends ServiceEntityRepository
 {
     /**
@@ -29,6 +28,7 @@ class PointsTable extends ServiceEntityRepository
 
     /**
      * @param User[] $users
+     *
      * @return User[]
      */
     public function loadCurrent(array $users, ?Match $currentMatch = null): array
@@ -63,10 +63,10 @@ class PointsTable extends ServiceEntityRepository
             /** @var User $user */
             $user = $users[$userStats['user']];
             $user->setTableData(
-                (int)$userStats['played'],
-                (int)$userStats['pints_drunk'],
-                (int)$userStats['bonus_points'],
-                (float)$userStats['points'],
+                (int) $userStats['played'],
+                (int) $userStats['pints_drunk'],
+                (int) $userStats['bonus_points'],
+                (float) $userStats['points'],
                 $position
             );
             $table[] = $user;

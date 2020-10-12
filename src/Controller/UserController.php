@@ -46,13 +46,13 @@ class UserController extends AbstractController
                 if (!isset($goalData[$score->getGoal()->getId()])) {
                     $goalData[$score->getGoal()->getId()] = ['goal' => $score->getGoal(), 'reasons' => [], 'points' => 0];
                 }
-                $goalData[$score->getGoal()->getId()]['points']+= $score->getPoints();
+                $goalData[$score->getGoal()->getId()]['points'] += $score->getPoints();
                 $goalData[$score->getGoal()->getId()]['reasons'][] = $this->scoreCalculator->getReasonName($score->getReason());
 
                 return $goalData;
             }, []);
             $goalData = array_map(function ($goalData) {
-                $goalData['points'] = sprintf('%dpt%s', $goalData['points'], ($goalData['points'] <> 1 ? 's' : ''));
+                $goalData['points'] = sprintf('%dpt%s', $goalData['points'], ($goalData['points'] != 1 ? 's' : ''));
                 $goalData['reasons'] = implode(', ', $goalData['reasons']);
 
                 return $goalData;
@@ -64,6 +64,7 @@ class UserController extends AbstractController
                 'goals' => $goalData,
             ];
         }, $this->predictionRepository->findByUser($user));
+
         return $this->render('user.html.twig', ['user' => $user, 'predictions' => $predictionData]);
     }
 }

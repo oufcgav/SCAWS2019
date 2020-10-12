@@ -17,7 +17,7 @@ class MatchType extends AbstractType
             ->add('opponent', TextType::class, ['label' => 'Opposition : '])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
-                'input'  => 'datetime_immutable',
+                'input' => 'datetime_immutable',
                 'data' => new \DateTimeImmutable(),
             ])
             ->add('location', ChoiceType::class, [
@@ -26,7 +26,7 @@ class MatchType extends AbstractType
                     'Away' => 'Away',
                 ],
             ])
-            ->add('competition', ChoiceType::class,  [
+            ->add('competition', ChoiceType::class, [
                 'choices' => [
                    'League' => 'League',
                    'Other' => 'Other',

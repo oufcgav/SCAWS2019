@@ -32,9 +32,9 @@ class GoalType extends AbstractType
 
         $builder
             ->add('scorer', ChoiceType::class, [
-                'choices' => $scorers
+                'choices' => $scorers,
             ])
-            ->add('timing', ChoiceType::class,  [
+            ->add('timing', ChoiceType::class, [
                 'choices' => $times,
             ])
             ->add('add', SubmitType::class)

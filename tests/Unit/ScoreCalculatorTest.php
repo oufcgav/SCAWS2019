@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class ScoreCalculatorTest extends TestCase
 {
-
     public function testReturnsNoScoresIfNoPredictionMatches()
     {
         $calc = new ScoreCalculator();
@@ -105,7 +104,7 @@ class ScoreCalculatorTest extends TestCase
             ->setTiming(GoalTimes::THIRD_FIFTEEN()->getValue());
         $prediction = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::FIRST_HALF()->getValue(), $match, 1, $userIsPresent);
         if ($userHasAlreadyScored) {
-            $oldScore = (new Score())
+            (new Score())
                 ->setPoints(ScoreCalculator::POINTS_STRIKERS)
                 ->setReason(ScoreCalculator::CORRECT_POSITION)
                 ->setPrediction($prediction)
@@ -138,7 +137,7 @@ class ScoreCalculatorTest extends TestCase
             ->setTiming(GoalTimes::THIRD_FIFTEEN()->getValue());
         $first = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::FIRST_HALF()->getValue(), $match, 1, true);
         $second = $this->createPrediction(Positions::DEFENDERS()->getValue(), GoalTimes::THIRD_FIFTEEN()->getValue(), $match, 2, true);
-        $oldScore = (new Score())
+        (new Score())
             ->setPoints(ScoreCalculator::POINTS_STRIKERS)
             ->setReason(ScoreCalculator::CORRECT_POSITION)
             ->setPrediction($second)

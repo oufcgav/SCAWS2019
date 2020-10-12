@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 class Prediction
 {
     /**
-     * @var integer
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -75,7 +75,6 @@ class Prediction
      * @ORM\Column(type="boolean")
      */
     private $reset = false;
-
 
     public function __construct()
     {
@@ -167,6 +166,7 @@ class Prediction
     public function setAtMatch(bool $atMatch): self
     {
         $this->atMatch = $atMatch;
+
         return $this;
     }
 
@@ -178,7 +178,7 @@ class Prediction
     public function addScore(Score $score): self
     {
         $this->scores->add($score);
-        $this->points+= $score->getPoints();
+        $this->points += $score->getPoints();
 
         return $this;
     }
@@ -194,7 +194,6 @@ class Prediction
     {
         return $this->scores->toArray();
     }
-
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {

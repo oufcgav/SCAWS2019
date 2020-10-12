@@ -12,6 +12,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 
     $parameters->set(Option::SKIP, [
+        \PhpCsFixer\Fixer\Operator\IncrementStyleFixer::class => null,
         \PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer::class => null,
+        \SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff::class => [
+            __DIR__ . '/src/Entity/*'
+        ]
     ]);
 };

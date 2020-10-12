@@ -39,7 +39,6 @@ class User implements UserInterface
      */
     private $previousPosition;
 
-
     /**
      * A visual identifier that represents this user.
      *

@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-
     /**
      * @var FixtureList
      */
@@ -46,6 +45,7 @@ class DefaultController extends AbstractController
             $predictions = $this->predictions->findByMatch($nextMatch);
             $goals = $this->goalRepository->findByMatch($nextMatch);
         }
+
         return $this->render('index.html.twig', [
             'match' => $nextMatch,
             'predictions' => $predictions,

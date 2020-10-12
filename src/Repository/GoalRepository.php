@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Match;
 use App\Entity\Goal;
+use App\Entity\Match;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

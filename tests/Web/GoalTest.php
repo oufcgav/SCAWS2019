@@ -3,7 +3,6 @@
 namespace App\Tests\Web;
 
 use App\Entity\GoalTimes;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class GoalTest extends WebTestCase
 {
@@ -42,5 +41,4 @@ class GoalTest extends WebTestCase
         $this->assertContains($player, $client->getResponse()->getContent());
         $this->assertContains($timing, $client->getResponse()->getContent());
     }
-
 }

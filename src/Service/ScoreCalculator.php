@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Entity\Goal;
 use App\Entity\GoalTimes;
@@ -26,9 +24,9 @@ class ScoreCalculator
     const POINTS_BONUS = 1;
 
     /**
-     * @param Goal $goal
      * @param Prediction[] $predictions
-     * @param bool $bonusPointsAvailable
+     * @param bool         $bonusPointsAvailable
+     *
      * @return Score[]
      */
     public function calculate(Goal $goal, array $predictions): array

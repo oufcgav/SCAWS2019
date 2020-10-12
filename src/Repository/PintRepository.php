@@ -6,7 +6,6 @@ use App\Entity\Match;
 use App\Entity\Pint;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\User\User;
 
 /**
  * @method Pint|null find($id, $lockMode = null, $lockVersion = null)

@@ -107,14 +107,14 @@ class Match
     public function setSeason(Season $season): Match
     {
         $this->season = $season;
+
         return $this;
     }
 
     public function qualifiesForBonusPoint()
     {
-        return ($this->location !== 'Home' || $this->competition !== 'League');
+        return $this->location !== 'Home' || $this->competition !== 'League';
     }
-
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {

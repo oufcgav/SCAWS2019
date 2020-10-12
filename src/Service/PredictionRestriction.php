@@ -8,7 +8,6 @@ use App\Repository\FixtureList;
 use App\Repository\PredictionRepository;
 use App\Security\User;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class PredictionRestriction
 {
@@ -24,7 +23,6 @@ class PredictionRestriction
      * @var LoggerInterface
      */
     private $logger;
-
 
     public function __construct(
         FixtureList $fixtureList,
@@ -43,7 +41,7 @@ class PredictionRestriction
             $nextMatch,
             $user->getUsername()
         );
-        $this->logger->info('Positions excluded: ' . implode(', ', $positionsExcluded));
+        $this->logger->info('Positions excluded: '.implode(', ', $positionsExcluded));
 
         $positions = array_combine(array_values(Positions::toArray()), array_values(Positions::toArray()));
 
@@ -57,7 +55,7 @@ class PredictionRestriction
             $nextMatch,
             $user->getUsername()
         );
-        $this->logger->info('Last time predicted: ' . $lastTimePredicted);
+        $this->logger->info('Last time predicted: '.$lastTimePredicted);
         $times = array_combine(array_values(GoalTimes::toArray()), array_values(GoalTimes::toArray()));
 
         return array_diff($times, [$lastTimePredicted]);

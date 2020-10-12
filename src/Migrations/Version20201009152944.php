@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20201009152944 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE goal (id INT AUTO_INCREMENT NOT NULL, match_id INT DEFAULT NULL, scorer VARCHAR(255) NOT NULL, timing VARCHAR(255) NOT NULL, position VARCHAR(255) NOT NULL, INDEX IDX_FCDCEB2E2ABEACD6 (match_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -34,7 +34,7 @@ final class Version20201009152944 extends AbstractMigration
         $this->addSql('ALTER TABLE score ADD CONSTRAINT FK_32993751667D1AFE FOREIGN KEY (goal_id) REFERENCES goal (id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE score DROP FOREIGN KEY FK_32993751667D1AFE');

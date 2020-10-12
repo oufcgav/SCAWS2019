@@ -16,6 +16,7 @@ class FixtureList extends ServiceEntityRepository
     public function findNextMatch(\DateTimeImmutable $now = null): ?Match
     {
         $now = $now ?? new \DateTimeImmutable();
+
         return $this->createQueryBuilder('m')
             ->where('m.date >= :now')
             ->orderBy('m.date', 'ASC')

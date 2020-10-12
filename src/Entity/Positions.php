@@ -16,5 +16,4 @@ class Positions extends Enum
     private const DEFENDERS = 'Defenders';
     private const MIDFIELDERS = 'Midfielders';
     private const STRIKERS = 'Strikers';
-
 }

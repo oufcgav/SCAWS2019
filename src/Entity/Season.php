@@ -35,18 +35,21 @@ class Season
     public function setLabel(string $label): Season
     {
         $this->label = $label;
+
         return $this;
     }
 
     public function setStartDate(\DateTimeImmutable $startDate): Season
     {
         $this->startDate = $startDate;
+
         return $this;
     }
 
     public function setEndDate(\DateTimeImmutable $endDate): Season
     {
         $this->endDate = $endDate;
+
         return $this;
     }
 }

@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 
 class WebTestCase extends BaseWebTestCase
 {
-
     protected function login(): KernelBrowser
     {
         $client = WebTestCase::createClient();
@@ -32,6 +31,7 @@ class WebTestCase extends BaseWebTestCase
         $form['password'] = 'whing';
 
         $client->submit($form);
+
         return $client;
     }
 

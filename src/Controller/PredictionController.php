@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PredictionController extends AbstractController
 {
-
     /**
      * @var FixtureList
      */
@@ -43,6 +42,7 @@ class PredictionController extends AbstractController
         $nextMatch = $this->fixtureList->findNextMatch();
         if (!$nextMatch) {
             $this->addFlash('error', 'You cannot add a prediction as there is no current match.');
+
             return $this->redirectToRoute('homepage');
         }
 
@@ -69,6 +69,7 @@ class PredictionController extends AbstractController
             }
             $this->em->persist($prediction);
             $this->em->flush();
+
             return $this->redirectToRoute('homepage');
         }
         $febMidweek = false;
@@ -78,12 +79,12 @@ class PredictionController extends AbstractController
         ) {
             $febMidweek = true;
         }
+
         return $this->render('predict.html.twig', [
             'form' => $form->createView(),
             'match' => $nextMatch,
             'user' => $this->getUser(),
-            'febMidweek' => $febMidweek
+            'febMidweek' => $febMidweek,
         ]);
-
     }
 }

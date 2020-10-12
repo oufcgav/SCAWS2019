@@ -7,7 +7,6 @@ use App\Form\Type\PintType;
 use App\Repository\FixtureList;
 use App\Repository\PintRepository;
 use App\Security\User;
-use App\Security\UserProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +42,7 @@ class PintController extends AbstractController
         $currentMatch = $this->fixtureList->findNextMatch();
         if (!$currentMatch) {
             $this->addFlash('error', 'You cannot add a pint as there is no current match.');
+
             return $this->redirectToRoute('homepage');
         }
 
@@ -60,6 +60,7 @@ class PintController extends AbstractController
             $pint->addPintDrunk();
             $this->em->persist($pint);
             $this->em->flush();
+
             return $this->redirectToRoute('table');
         }
 
@@ -77,12 +78,14 @@ class PintController extends AbstractController
         $currentMatch = $this->fixtureList->findNextMatch();
         if (!$currentMatch) {
             $this->addFlash('error', 'You cannot add a pint as there is no current match.');
+
             return $this->redirectToRoute('homepage');
         }
         /** @var User $user */
         $user = $this->getUser();
         if (!$user) {
             $this->addFlash('error', 'You must be logged in to add a pint for yourself.');
+
             return $this->redirectToRoute('homepage');
         }
         $pint = $this->pintRepository->findByUserAndMatch($user->getUsername(), $currentMatch);
@@ -95,6 +98,7 @@ class PintController extends AbstractController
         $pint->addPintDrunk();
         $this->em->persist($pint);
         $this->em->flush();
+
         return $this->redirectToRoute('table');
     }
 }

@@ -23,7 +23,6 @@ class PredictionType extends AbstractType
      */
     private $predictionRestriction;
 
-
     public function __construct(
         Security $security,
         PredictionRestriction $predictionRestriction
@@ -45,7 +44,7 @@ class PredictionType extends AbstractType
             ->add('position', ChoiceType::class, [
                 'choices' => $availablePositions,
             ])
-            ->add('time', ChoiceType::class,  [
+            ->add('time', ChoiceType::class, [
                 'choices' => $availableTimes,
             ])
             ->add('atMatch', ChoiceType::class, [
@@ -69,6 +68,5 @@ class PredictionType extends AbstractType
             ])
             ->add('add', SubmitType::class)
         ;
-
     }
 }

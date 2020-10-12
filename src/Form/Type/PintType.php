@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PintType extends AbstractType
 {
-
     /**
      * @var UserProvider
      */

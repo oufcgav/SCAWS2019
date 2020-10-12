@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-
     private $passwordEncoder;
     private $users;
     /**
@@ -28,7 +27,7 @@ class UserProvider implements UserProviderInterface
             'Gav',
             'Just',
             'Smudger',
-            'Stu'
+            'Stu',
         ];
         $this->defaultPassword = $defaultPassword;
     }
@@ -52,6 +51,7 @@ class UserProvider implements UserProviderInterface
         $user = new User();
         $user->setUsername($username);
         $user->setPassword($this->passwordEncoder->encodePassword($user, $this->defaultPassword));
+
         return $user;
     }
 
@@ -66,8 +66,8 @@ class UserProvider implements UserProviderInterface
      * If your firewall is "stateless: true" (for a pure API), this
      * method is not called.
      *
-     * @param UserInterface $user
      * @return UserInterface
+     *
      * @throws UnsupportedUserException
      */
     public function refreshUser(UserInterface $user)
@@ -75,6 +75,7 @@ class UserProvider implements UserProviderInterface
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
         }
+
         return $user;
     }
 

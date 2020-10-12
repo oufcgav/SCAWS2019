@@ -12,7 +12,7 @@ class PredictionTest extends WebTestCase
     public function testCannotAddPredictionIfNoMatch()
     {
         $client = $this->login();
-        $link = $this->getAddPredictionForm($client);
+        $this->getAddPredictionForm($client);
         $this->assertResponseStatusCodeSame(302);
         $this->assertEquals('/', $client->getResponse()->headers->get('Location'));
     }
@@ -65,6 +65,7 @@ class PredictionTest extends WebTestCase
             ->filter('a:contains("Add prediction")')
             ->eq(0)
             ->link();
+
         return $client->click($link);
     }
 }

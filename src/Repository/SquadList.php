@@ -4,7 +4,6 @@ namespace App\Repository;
 
 class SquadList
 {
-
     public function getCurrentSquad(): array
     {
         return

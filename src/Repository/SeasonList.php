@@ -3,9 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Season;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
+use Doctrine\Persistence\ManagerRegistry;
 
 class SeasonList extends ServiceEntityRepository
 {
@@ -17,6 +16,7 @@ class SeasonList extends ServiceEntityRepository
     public function findCurrentSeason(\DateTimeImmutable $now = null): ?Season
     {
         $now = $now ?? new \DateTimeImmutable();
+
         return $this->createQueryBuilder('s')
             ->where('s.startDate <= :now')
             ->andWhere('s.endDate >= :now')

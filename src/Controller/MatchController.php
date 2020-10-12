@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MatchController extends AbstractController
 {
-
     /**
      * @var EntityManagerInterface
      */
@@ -40,8 +39,10 @@ class MatchController extends AbstractController
             $match->setSeason($this->seasonList->findCurrentSeason());
             $this->em->persist($match);
             $this->em->flush();
+
             return $this->redirectToRoute('homepage');
         }
+
         return $this->render('match.html.twig', ['form' => $form->createView()]);
     }
 }

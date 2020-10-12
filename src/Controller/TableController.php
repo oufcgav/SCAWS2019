@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TableController extends AbstractController
 {
-
     /**
      * @var UserProvider
      */
@@ -42,6 +41,7 @@ class TableController extends AbstractController
         $nextMatch = $this->fixtureList->findNextMatch();
         $users = $this->userProvider->getUsers();
         $table = $this->pointsTable->loadCurrent($users, $nextMatch);
+
         return $this->render('table.html.twig', ['table' => $table]);
     }
 }

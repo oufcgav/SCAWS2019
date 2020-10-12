@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* @ORM\Entity(repositoryClass="\App\Repository\PointsTable")
-* @ORM\Table(name="score")
-*/
+ * @ORM\Entity(repositoryClass="\App\Repository\PointsTable")
+ * @ORM\Table(name="score")
+ */
 class Score
 {
     /**
@@ -29,7 +29,7 @@ class Score
      */
     private $goal;
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(type="integer")
      */
     private $reason;
@@ -39,7 +39,6 @@ class Score
      */
     private $points = 0;
 
-
     public function getPoints(): float
     {
         return $this->points;
@@ -48,6 +47,7 @@ class Score
     public function setPoints(float $points): Score
     {
         $this->points = $points;
+
         return $this;
     }
 
@@ -67,6 +67,7 @@ class Score
     public function setGoal(Goal $goal): Score
     {
         $this->goal = $goal;
+
         return $this;
     }
 
@@ -78,6 +79,7 @@ class Score
     public function setReason(int $reason): Score
     {
         $this->reason = $reason;
+
         return $this;
     }
 
@@ -85,5 +87,4 @@ class Score
     {
         return $this->goal;
     }
-
 }

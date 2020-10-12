@@ -46,25 +46,16 @@ class Goal
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getScorer(): string
     {
         return $this->scorer;
     }
 
-    /**
-     * @return string
-     */
     public function getTiming(): string
     {
         return $this->timing;
     }
 
-    /**
-     * @return string
-     */
     public function getPosition(): string
     {
         return $this->position;
@@ -75,10 +66,6 @@ class Goal
         return $this->match;
     }
 
-    /**
-     * @param string $scorer
-     * @return Goal
-     */
     public function setScorer(string $scorer): Goal
     {
         $this->scorer = $scorer;
@@ -103,16 +90,14 @@ class Goal
                 $this->position = 'Own goal';
                 break;
         }
+
         return $this;
     }
 
-    /**
-     * @param string $timing
-     * @return Goal
-     */
     public function setTiming(string $timing): Goal
     {
         $this->timing = $timing;
+
         return $this;
     }
 

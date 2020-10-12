@@ -2,7 +2,6 @@
 
 namespace App\Tests\Database;
 
-
 use App\Entity\GoalTimes;
 use App\Entity\Positions;
 use App\Security\User;
@@ -12,7 +11,6 @@ use DateTimeImmutable;
 
 class PredictionRestrictionTest extends BaseTestCase
 {
-
     public function testCannotPredictSamePositionOrTime()
     {
         $user = (new User())->setUsername('Andy');

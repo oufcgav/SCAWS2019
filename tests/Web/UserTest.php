@@ -2,13 +2,11 @@
 
 namespace App\Tests\Web;
 
-
 use App\Entity\GoalTimes;
 use App\Entity\Positions;
 
 class UserTest extends WebTestCase
 {
-
     public function testViewPageForSpecificUser()
     {
         $client = $this->login();
@@ -26,6 +24,5 @@ class UserTest extends WebTestCase
         $client->request('GET', '/user/Andy');
         $this->assertContains($position, $client->getResponse()->getContent());
         $this->assertContains($timing, $client->getResponse()->getContent());
-
     }
 }

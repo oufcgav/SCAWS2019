@@ -26,5 +26,4 @@ class GoalTimes extends Enum
     private const FIFTH_FIFTEEN = '61-75 mins';
     private const SIXTH_FIFTEEN = '76-90 mins';
     private const STOPPAGE_TIME = 'Stoppage time';
-
 }

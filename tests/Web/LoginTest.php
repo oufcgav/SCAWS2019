@@ -4,7 +4,6 @@ namespace App\Tests\Web;
 
 class LoginTest extends WebTestCase
 {
-
     public function testRedirectedToLoginWhenNotLoggedIn()
     {
         $client = self::createClient();
