@@ -5,7 +5,7 @@ namespace App\Tests\Web;
 use App\Entity\GoalTimes;
 use App\Entity\Positions;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\DomCrawler\Form;
 
 class PredictionTest extends WebTestCase
 {
@@ -22,8 +22,7 @@ class PredictionTest extends WebTestCase
         $client = $this->login();
         $client = $this->addMatch($client);
 
-        $prediction = $this->getAddPredictionForm($client);
-        $form = $prediction->selectButton('Add')->form();
+        $form = $this->getAddPredictionForm($client);
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
@@ -41,8 +40,7 @@ class PredictionTest extends WebTestCase
         $client = $this->login();
         $client = $this->addMatch($client);
 
-        $prediction = $this->getAddPredictionForm($client);
-        $form = $prediction->selectButton('Add')->form();
+        $form = $this->getAddPredictionForm($client);
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
@@ -51,14 +49,13 @@ class PredictionTest extends WebTestCase
 
         $client->submit($form);
         $client->followRedirect();
-        $prediction = $this->getAddPredictionForm($client);
 
-        $form = $prediction->selectButton('Add')->form();
+        $form = $this->getAddPredictionForm($client);
         $this->assertEquals($position, $form['prediction[position]']->getValue());
         $this->assertContains($time, $form['prediction[time]']->getValue());
     }
 
-    protected function getAddPredictionForm(KernelBrowser $client): Crawler
+    protected function getAddPredictionForm(KernelBrowser $client): ?Form
     {
         $index = $client->request('GET', '/');
         $link = $index
@@ -66,6 +63,9 @@ class PredictionTest extends WebTestCase
             ->eq(0)
             ->link();
 
-        return $client->click($link);
+        $prediction = $client->click($link);
+        $button = $prediction->selectButton('Add');
+
+        return count($button) > 0 ? $button->form() : null;
     }
 }
