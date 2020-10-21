@@ -70,12 +70,6 @@ class Prediction
      */
     private $scores;
 
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $reset = false;
-
     public function __construct()
     {
         $this->scores = new ArrayCollection();
@@ -179,13 +173,6 @@ class Prediction
     {
         $this->scores->add($score);
         $this->points += $score->getPoints();
-
-        return $this;
-    }
-
-    public function setReset(): self
-    {
-        $this->reset = true;
 
         return $this;
     }

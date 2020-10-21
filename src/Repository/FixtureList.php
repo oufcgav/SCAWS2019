@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Match;
+use App\Entity\Season;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,6 +26,19 @@ class FixtureList extends ServiceEntityRepository
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult()
+        ;
+    }
+
+    public function findPreviousMatches(Season $season, Match $match): array
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.date < :current')
+            ->andWhere('m.season = :season')
+            ->orderBy('m.date', 'DESC')
+            ->setParameter('current', $match->getDate()->format('Y-m-d'))
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult()
         ;
     }
 }

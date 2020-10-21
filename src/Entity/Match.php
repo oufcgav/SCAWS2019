@@ -45,6 +45,11 @@ class Match
      * @ORM\JoinColumn(name="season_id", referencedColumnName="id")
      */
     private $season;
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $reset = false;
 
     public function __construct()
     {
@@ -114,6 +119,18 @@ class Match
     public function qualifiesForBonusPoint()
     {
         return $this->location !== 'Home' || $this->competition !== 'League';
+    }
+
+    public function resetPositionChoices(): bool
+    {
+        return $this->reset;
+    }
+
+    public function setReset(): self
+    {
+        $this->reset = true;
+
+        return $this;
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)

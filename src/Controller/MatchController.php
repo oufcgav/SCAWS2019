@@ -6,6 +6,7 @@ use App\Entity\Match;
 use App\Form\Type\MatchType;
 use App\Repository\FixtureList;
 use App\Repository\SeasonList;
+use App\Service\PositionResetter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,17 +40,19 @@ class MatchController extends AbstractController
     /**
      * @Route("/match", name="add_match")
      */
-    public function index(Request $request)
+    public function index(Request $request, PositionResetter $resetter)
     {
         $match = $this->fixtureList->findNextMatch();
+        $season = $this->seasonList->findCurrentSeason();
         if (!$match) {
             $match = (new Match())
-                ->setSeason($this->seasonList->findCurrentSeason())
+                ->setSeason($season)
             ;
         }
         $form = $this->createForm(MatchType::class, $match);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $match = $resetter->reset($season, $match);
             $this->em->persist($match);
             $this->em->flush();
 

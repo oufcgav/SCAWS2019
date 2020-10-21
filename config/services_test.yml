@@ -12,6 +12,10 @@ services:
     autowire: true
     public: true
 
+  App\Service\PositionResetter:
+    autowire: true
+    public: true
+
   App\Service\PredictionRestriction:
     autowire: true
     public: true

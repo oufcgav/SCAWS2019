@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Match;
-use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -82,21 +81,23 @@ class PredictionRepository extends ServiceEntityRepository
     public function getLastPredictions(Match $currentMatch, $human, $numPredictions)
     {
         $this->logger->info('Getting last  predictions', ['num' => $numPredictions, 'user' => $human, 'match' => $currentMatch]);
+        if ($currentMatch->resetPositionChoices()) {
+            return [];
+        }
         $sql = 'SELECT id 
                 FROM `match` m
-                WHERE date < ?
-                ORDER BY date DESC
-                LIMIT ?';
+                WHERE date > (
+                    SELECT MAX(date) 
+                    FROM `match`
+                    WHERE reset = 1 
+                )';
 
-        $lastMatches = $this->_em->getConnection()->fetchAllAssociative($sql,
-            [$currentMatch->getDate()->format('Y-m-d'), $numPredictions],
-            [ParameterType::STRING, ParameterType::INTEGER]
-        );
-        $matchesToExclude = array_map(function ($lastMatch) {
+        $lastMatches = $this->_em->getConnection()->fetchAllAssociative($sql);
+        $matchesSinceReset = array_map(function ($lastMatch) {
             return $lastMatch['id'];
         }, $lastMatches);
-        $this->logger->info('Predictions for matches', ['exclude' => $matchesToExclude]);
-        $sql = 'SELECT position, reset 
+        $this->logger->info('Predictions for matches', ['matchesSinceReset' => $matchesSinceReset]);
+        $sql = 'SELECT position 
                 FROM prediction p
                 WHERE p.user = ?
                 AND p.match_id IN (?)
@@ -105,7 +106,7 @@ class PredictionRepository extends ServiceEntityRepository
         $positionsPredicted = $this->_em->getConnection()->fetchAllAssociative($sql,
             [
                 $human,
-                $matchesToExclude,
+                $matchesSinceReset,
             ],
             [
                 ParameterType::STRING,
@@ -114,10 +115,6 @@ class PredictionRepository extends ServiceEntityRepository
         );
         $positionsExcluded = [];
         foreach ($positionsPredicted as $positionPredicted) {
-            if ($positionPredicted['position'] === Positions::GOALKEEPER()->getValue()
-                || $positionPredicted['reset'] === '1') {
-                break;
-            }
             $positionsExcluded[] = $positionPredicted['position'];
         }
 

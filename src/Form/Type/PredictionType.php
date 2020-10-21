@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Positions;
 use App\Repository\PredictionRepository;
 use App\Security\User;
 use App\Service\PredictionRestriction;
@@ -38,6 +39,7 @@ class PredictionType extends AbstractType
             throw new RuntimeException('Not logged in');
         }
         $availablePositions = $this->predictionRestriction->getPositions($user);
+        unset($availablePositions[Positions::GOALKEEPER()->getValue()]);
         $availableTimes = $this->predictionRestriction->getTimings($user);
 
         $builder
