@@ -1,0 +1,11 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'seasons' %}
+
+{% block content %}
+    <h5>Seasons</h5>
+    <ul>
+        {% for season in seasons %}
+            <li><a href="{{ path('table_old', { season: season.id }) }}">{{ season.label }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

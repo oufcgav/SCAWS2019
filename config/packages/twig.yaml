@@ -4,3 +4,5 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes: ['common/form_div_layout.html.twig']
     exception_controller: ~
+    globals:
+        enable_seasons: '%env(bool:ENABLE_SEASONS)%'

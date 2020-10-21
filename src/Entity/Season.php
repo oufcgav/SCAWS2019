@@ -32,6 +32,26 @@ class Season
      */
     private $endDate;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getStartDate(): \DateTimeImmutable
+    {
+        return $this->startDate;
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    public function isCurrent(\DateTimeImmutable $now): bool
+    {
+        return $this->startDate <= $now && $now <= $this->endDate;
+    }
+
     public function setLabel(string $label): Season
     {
         $this->label = $label;

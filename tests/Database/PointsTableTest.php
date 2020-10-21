@@ -29,7 +29,9 @@ class PointsTableTest extends BaseTestCase
 
     public function testWithNoScoresReturnsEmptyTable()
     {
-        $table = $this->pointsTable->loadCurrent($this->users);
+        $season = $this->createSeason();
+        $this->em->flush();
+        $table = $this->pointsTable->loadCurrent($season, $this->users);
 
         $this->assertCount(7, $table);
     }
@@ -47,7 +49,7 @@ class PointsTableTest extends BaseTestCase
             ->setPoints($this->faker->numberBetween(0, 6));
         $this->em->flush();
 
-        $table = $this->pointsTable->loadCurrent($this->users, $match);
+        $table = $this->pointsTable->loadCurrent($season, $this->users, $match);
 
         $points = 8;
         foreach ($table as $user) {
@@ -83,7 +85,7 @@ class PointsTableTest extends BaseTestCase
         ;
         $this->em->flush();
 
-        $table = $this->pointsTable->loadCurrent($this->users, $secondMatch);
+        $table = $this->pointsTable->loadCurrent($season, $this->users, $secondMatch);
 
         foreach ($table as $user) {
             switch ($user->getUsername()) {

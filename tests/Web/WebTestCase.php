@@ -17,8 +17,14 @@ class WebTestCase extends BaseWebTestCase
         $client = WebTestCase::createClient();
         $container = $client->getContainer();
         $em = $container->get('doctrine.orm.default_entity_manager');
+        $oldSeason = (new Season())
+            ->setLabel('Old season')
+            ->setStartDate((new \DateTimeImmutable())->sub(new \DateInterval('P1Y')))
+            ->setEndDate((new \DateTimeImmutable())->sub(new \DateInterval('P1M')))
+        ;
+        $em->persist($oldSeason);
         $season = (new Season())
-            ->setLabel('Test season')
+            ->setLabel('Current season')
             ->setStartDate((new \DateTimeImmutable())->sub(new \DateInterval('P1M')))
             ->setEndDate((new \DateTimeImmutable())->add(new \DateInterval('P1M')))
         ;
