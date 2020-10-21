@@ -86,7 +86,7 @@ class PredictionRepository extends ServiceEntityRepository
         }
         $sql = 'SELECT id 
                 FROM `match` m
-                WHERE date > (
+                WHERE date >= (
                     SELECT MAX(date) 
                     FROM `match`
                     WHERE reset = 1 

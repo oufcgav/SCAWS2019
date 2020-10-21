@@ -15,9 +15,8 @@ class PredictionRestrictionTest extends BaseTestCase
     {
         $user = (new User())->setUsername('Andy');
         $season = $this->createSeason();
-        $firstMatch = $this->createMatch($season, 'First match', (new DateTimeImmutable())->sub(new DateInterval('P2W')));
-        $firstMatch->setReset();
         $previousMatch = $this->createMatch($season, 'Previous match', (new DateTimeImmutable())->sub(new DateInterval('P1W')));
+        $previousMatch->setReset();
         $this->createMatch($season, 'Next match', (new DateTimeImmutable())->add(new DateInterval('P1W')));
         $position = Positions::MIDFIELDERS()->getValue();
         $time = GoalTimes::SECOND_HALF()->getValue();
