@@ -3,30 +3,37 @@
 
 {% block content %}
     <h4>Current table</h4>
-    <table class="table">
+    <table class="table span7">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Pld</th>
-            <th>Pints</th>
-            <th>Bonus pts</th>
-            <th>Points</th>
+            <th class="span1">&nbsp;</th>
+            <th class="span2">Name</th>
+            <th class="span1">Pld</th>
+            <th class="span1">Pints</th>
+            <th class="span1">Bonus pts</th>
+            <th class="span1">Points</th>
         </tr>
         </thead>
         <tbody>
         {% for user in table %}
             <tr id="{{ user.username }}">
-                <td><a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a></td>
+                <td>
+                    {% if user.hasMovedUp %}
+                        <span class="table-change badge badge-success"><i class="icon-arrow-up icon-white"></i></span>
+                    {% elseif user.hasMovedDown %}
+                        <span class="table-change badge badge-important"><i class="icon-arrow-down icon-white"></i></span>
+                    {% else %}
+                        <span class="table-change badge badge-secondary"><i class="icon-minus icon-white"></i></span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a>
+                </td>
                 <td>{{ user.played }}</td>
                 <td class="pints">{{ user.pints }}</td>
                 <td>{{ user.bonusPoints }}</td>
-                <td class="points">
+                <td class="points text-right">
                     {{ user.points|number_format(1) }}
-                    {% if user.hasMovedUp %}
-                        &nbsp;<span class="table-change badge badge-success"><i class="icon-arrow-up icon-white"></i></span>
-                    {% elseif user.hasMovedDown %}
-                        &nbsp;<span class="table-change badge badge-important"><i class="icon-arrow-down icon-white"></i></span>
-                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
