@@ -11,10 +11,6 @@
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-
-###> symfony/web-server-bundle ###
-/.web-server-pid
-###< symfony/web-server-bundle ###
 ### Symfony template
 # Cache and logs (Symfony2)
 /app/cache/*

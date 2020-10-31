@@ -36,7 +36,6 @@
         "symfony/maker-bundle": "^1.11",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
-        "symfony/web-server-bundle": "4.4.*",
         "symplify/easy-coding-standard": "^8.3",
         "twitter/bootstrap": "^2.3.2"
     },
