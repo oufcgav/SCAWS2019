@@ -26,4 +26,27 @@ class GoalTimes extends Enum
     private const FIFTH_FIFTEEN = '61-75 mins';
     private const SIXTH_FIFTEEN = '76-90 mins';
     private const STOPPAGE_TIME = 'Stoppage time';
+
+    public static function matchesHalf(Goal $goal, Prediction $prediction): bool
+    {
+        $goalMatchesPrediction = false;
+        switch ($goal->getTiming()) {
+            case static::FIRST_FIFTEEN()->getValue():
+            case static::SECOND_FIFTEEN()->getValue():
+            case static::THIRD_FIFTEEN()->getValue():
+                if ($prediction->getTime() === static::FIRST_HALF()->getValue()) {
+                    $goalMatchesPrediction = true;
+                }
+                break;
+            case static::FOURTH_FIFTEEN()->getValue():
+            case static::FIFTH_FIFTEEN()->getValue():
+            case static::SIXTH_FIFTEEN()->getValue():
+                if ($prediction->getTime() === static::SECOND_HALF()->getValue()) {
+                    $goalMatchesPrediction = true;
+                }
+                break;
+        }
+
+        return $goalMatchesPrediction;
+    }
 }

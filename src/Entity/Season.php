@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\SeasonList")
+ * @ORM\Entity(repositoryClass="App\Repository\SeasonList")
  * @ORM\Table(name="season")
  */
 class Season
@@ -22,12 +23,12 @@ class Season
      */
     private $label;
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      * @ORM\Column(type="date_immutable")
      */
     private $startDate;
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      * @ORM\Column(type="date_immutable")
      */
     private $endDate;
@@ -37,7 +38,7 @@ class Season
         return $this->id;
     }
 
-    public function getStartDate(): \DateTimeImmutable
+    public function getStartDate(): DateTimeImmutable
     {
         return $this->startDate;
     }
@@ -47,8 +48,10 @@ class Season
         return $this->label;
     }
 
-    public function isCurrent(\DateTimeImmutable $now): bool
+    public function isCurrent(?DateTimeImmutable $now = null): bool
     {
+        $now = $now ?? new DateTimeImmutable();
+
         return $this->startDate <= $now && $now <= $this->endDate;
     }
 
@@ -59,14 +62,14 @@ class Season
         return $this;
     }
 
-    public function setStartDate(\DateTimeImmutable $startDate): Season
+    public function setStartDate(DateTimeImmutable $startDate): Season
     {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function setEndDate(\DateTimeImmutable $endDate): Season
+    public function setEndDate(DateTimeImmutable $endDate): Season
     {
         $this->endDate = $endDate;
 

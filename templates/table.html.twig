@@ -1,8 +1,13 @@
 {% extends 'layout.html.twig' %}
+{% set currentSeason = season.isCurrent %}
 {% set active = 'table' %}
 
 {% block content %}
-    <h4>Current table</h4>
+    {% if currentSeason %}
+        <h4>Current table</h4>
+    {% else %}
+        <h4>Final table for {{ season.label }} season</h4>
+    {% endif %}
     <table class="table span7">
         <thead>
         <tr>
@@ -27,7 +32,8 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="{{ path('user', { username: user.username }) }}">{{ user.username }}</a>
+                    {% set userPath = season.isCurrent ? path('user', { username: user.username }) : path('user_old', { username: user.username, season: season.id })  %}
+                    <a href="{{ userPath }}">{{ user.username }}</a>
                 </td>
                 <td>{{ user.played }}</td>
                 <td class="pints">{{ user.pints }}</td>

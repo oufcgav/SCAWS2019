@@ -1,11 +1,13 @@
 {% extends 'layout.html.twig' %}
+{% set currentSeason = season.isCurrent %}
 {% set active = 'table' %}
 
 {% block content %}
-    <h4>All predictions for {{ user.username }}</h4>
+    {% set seasonTitle = season.isCurrent ? 'current season' : season.label %}
+    <h4>All predictions by {{ user.username }} for {{ seasonTitle }}</h4>
     <ul>
         {% for data in predictions %}
-        <li>vs {{ data.match.opponent }} {% if data.match.location == 'Home' %}(H){% else %}(A){% endif %} on {{ data.match.date|date("D jS M") }}
+        <li class="prediction">vs {{ data.match.opponent }} {% if data.match.location == 'Home' %}(H){% else %}(A){% endif %} on {{ data.match.date|date("D jS M, Y") }}
             {{ data.prediction.position }} {{ data.prediction.time }} - {{ data.prediction.points }}pts
             <ul>
                 {% for goalData in data.goals %}

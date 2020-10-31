@@ -27,7 +27,7 @@ class SeasonsController extends AbstractController
     {
         $seasons = $this->seasonList->findAll();
         usort($seasons, function (Season $a, Season $b) {
-            return $a->getStartDate() <=> $b->getStartDate();
+            return $b->getStartDate() <=> $a->getStartDate();
         });
 
         return $this->render('seasons.html.twig', [

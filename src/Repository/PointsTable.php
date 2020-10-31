@@ -50,14 +50,11 @@ class PointsTable extends ServiceEntityRepository
                       )
                    ) AS bonus_points,
                    SUM(p.points) AS points,
-                   IFNULL(
-                      (SELECT SUM(count)
-                      FROM pint
-                      WHERE pint.user = p.user),
-                      0
-                   ) AS pints_drunk
+                   SUM(IFNULL(pint.count, 0)) AS pints_drunk
                 FROM prediction AS p
                 INNER JOIN `match` m ON p.match_id = m.id
+                LEFT JOIN pint ON pint.user = p.user
+                    AND p.match_id = pint.match_id
                 WHERE m.season_id = ?
                 GROUP BY p.user
                 ORDER BY points DESC, bonus_points DESC, pints_drunk DESC, played ASC, p.user ASC';

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Match;
 use App\Entity\Prediction;
+use App\Entity\Season;
 use App\Security\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
@@ -43,6 +44,19 @@ class PredictionRepository extends ServiceEntityRepository
     public function findByUser(User $user)
     {
         return $this->findBy(['user' => $user->getUsername()]);
+    }
+
+    public function findByUserAndSeason(User $user, Season $season)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.match', 'm')
+            ->where('p.user = :user')
+            ->andWhere('m.season = :season')
+            ->setParameter('user', $user->getUsername())
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     public function getLastTimePeriodPredicted(Match $currentMatch, string $human)

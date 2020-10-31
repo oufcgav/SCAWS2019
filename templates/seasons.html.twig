@@ -5,7 +5,8 @@
     <h5>Seasons</h5>
     <ul>
         {% for season in seasons %}
-            <li><a href="{{ path('table_old', { season: season.id }) }}">{{ season.label }}</a></li>
+            {% set seasonPath = season.isCurrent ? path('table') : path('table_old', { season: season.id })  %}
+            <li><a href="{{ seasonPath }}">{{ season.label }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}

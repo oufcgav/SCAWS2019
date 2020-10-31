@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\FixtureList")
+ * @ORM\Entity(repositoryClass="App\Repository\FixtureList")
  * @ORM\Table(name="`match`")
  */
 class Match
@@ -50,10 +52,16 @@ class Match
      * @ORM\Column(type="boolean")
      */
     private $reset = false;
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Goal", mappedBy="match")
+     */
+    private $goals;
 
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
+        $this->goals = new ArrayCollection();
     }
 
     public function getOpponent(): string
@@ -129,6 +137,23 @@ class Match
     public function setReset(): self
     {
         $this->reset = true;
+
+        return $this;
+    }
+
+    /**
+     * @return Goal[]
+     */
+    public function getGoals(): array
+    {
+        return $this->goals->toArray();
+    }
+
+    public function addGoal(Goal $goal): self
+    {
+        if (!$this->goals->contains($goal)) {
+            $this->goals->add($goal);
+        }
 
         return $this;
     }

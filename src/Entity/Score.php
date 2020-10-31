@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\PointsTable")
+ * @ORM\Entity(repositoryClass="App\Repository\PointsTable")
  * @ORM\Table(name="score")
  */
 class Score
@@ -24,7 +24,7 @@ class Score
     private $prediction;
     /**
      * @var Goal
-     * @ORM\ManyToOne(targetEntity="Goal")
+     * @ORM\ManyToOne(targetEntity="Goal", inversedBy="scores")
      * @ORM\JoinColumn(name="goal_id", referencedColumnName="id")
      */
     private $goal;
@@ -67,6 +67,7 @@ class Score
     public function setGoal(Goal $goal): Score
     {
         $this->goal = $goal;
+        $goal->addScore($this);
 
         return $this;
     }

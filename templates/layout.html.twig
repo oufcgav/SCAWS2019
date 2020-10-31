@@ -22,6 +22,7 @@
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
 {% set active = active|default(null) %}
+{% set currentSeason = currentSeason ?? true %}
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <div class="container">
@@ -30,16 +31,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="{{ path('homepage') }}">{{ 'SCAWS! 2020-21'|trans }}</a>
+            {% set tablePath = currentSeason ? path('table') : path('table_old', { season: season.id })  %}
+            {% set seasonLabel = currentSeason ? '' : " #{season.label}" %}
+            <a class="brand" href="{{ path('homepage') }}">{{ 'SCAWS!'|trans }}</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li {% if 'table' == active %}class="active"{% endif %}><a href="{{ path('table') }}">{{ 'Table'|trans }}</a></li>
+                    <li {% if 'table' == active %}class="active"{% endif %}><a href="{{ tablePath }}">{{ 'Table'|trans }}{{ seasonLabel }}</a></li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li {% if 'add_prediction' == active %}class="active"{% endif %}><a href="{{ path('add_prediction') }}">Add prediction</a></li>
-                        <li {% if 'add_goal' == active %}class="active"{% endif %}><a href="{{ path('add_goal') }}">Add goal</a></li>
-                        <li {% if 'add_match' == active %}class="active"{% endif %}><a href="{{ path('add_match') }}">Add match</a></li>
-                        <li {% if 'add_pint' == active %}class="active"{% endif %}><a href="{{ path('add_pint') }}">Add pint</a></li>
-                        <li><a href="{{ path('add_my_pint') }}"><img src="{{ app.request.basepath }}/img/pint.png" alt="I'm getting pissed" /></a></li>
+                        {% if currentSeason %}
+                            <li {% if 'add_prediction' == active %}class="active"{% endif %}><a href="{{ path('add_prediction') }}">Add prediction</a></li>
+                            <li {% if 'add_goal' == active %}class="active"{% endif %}><a href="{{ path('add_goal') }}">Add goal</a></li>
+                            <li {% if 'add_match' == active %}class="active"{% endif %}><a href="{{ path('add_match') }}">Add match</a></li>
+                            <li {% if 'add_pint' == active %}class="active"{% endif %}><a href="{{ path('add_pint') }}">Add pint</a></li>
+                            <li><a href="{{ path('add_my_pint') }}"><img src="{{ app.request.basepath }}/img/pint.png" alt="I'm getting pissed" /></a></li>
+                        {% endif %}
                         {% if enable_seasons %}
                             <li {% if 'seasons' == active %}class="active"{% endif %}><a href="{{ path('list_seasons') }}">Seasons</a></li>
                         {% endif %}

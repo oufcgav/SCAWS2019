@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\GoalRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GoalRepository")
  * @ORM\Table(name="goal")
  */
 class Goal
@@ -33,10 +35,20 @@ class Goal
     private $position = '';
     /**
      * @var Match
-     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\ManyToOne(targetEntity="Match", inversedBy="goals")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     private $match;
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Score", mappedBy="goal")
+     */
+    private $scores;
+
+    public function __construct()
+    {
+        $this->scores = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -64,6 +76,14 @@ class Goal
     public function getMatch(): Match
     {
         return $this->match;
+    }
+
+    /**
+     * @return Score[]
+     */
+    public function getScores(): array
+    {
+        return $this->scores->toArray();
     }
 
     public function setScorer(string $scorer): Goal
@@ -104,6 +124,16 @@ class Goal
     public function setMatch(Match $match): self
     {
         $this->match = $match;
+        $match->addGoal($this);
+
+        return $this;
+    }
+
+    public function addScore(Score $score): self
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores->add($score);
+        }
 
         return $this;
     }
