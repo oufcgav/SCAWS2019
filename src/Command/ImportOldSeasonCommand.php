@@ -12,6 +12,7 @@ use App\Repository\SeasonList;
 use App\Service\ScoreCalculator;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -38,12 +39,21 @@ class ImportOldSeasonCommand extends Command
      * @var Prediction[]
      */
     private $oldPredictions = [];
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(EntityManagerInterface $em, SeasonList $seasonList, string $name = null)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        LoggerInterface $logger,
+        SeasonList $seasonList,
+        string $name = null
+    ) {
         parent::__construct($name);
         $this->em = $em;
         $this->seasonList = $seasonList;
+        $this->logger = $logger;
     }
 
     protected function configure()
@@ -116,6 +126,7 @@ class ImportOldSeasonCommand extends Command
             $prediction = $this->oldPredictions[(int) $oldScore['prediction_id']];
             $match = $prediction->getMatch();
             $goals = $match->getGoals();
+            $this->logger->debug('Importing score', ['score' => $oldScore['id'], 'match' => $match->getId(), 'goals' => count($goals)]);
             switch ((int) $oldScore['reason']) {
                 case ScoreCalculator::CORRECT_POSITION:
                     $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
