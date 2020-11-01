@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -10,16 +9,14 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-    private $passwordEncoder;
     private $users;
     /**
      * @var string
      */
     private $defaultPassword;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, string $defaultPassword)
+    public function __construct(string $defaultPassword)
     {
-        $this->passwordEncoder = $passwordEncoder;
         $this->users = [
             'Andy',
             'Blochy',
@@ -50,7 +47,7 @@ class UserProvider implements UserProviderInterface
         }
         $user = new User();
         $user->setUsername($username);
-        $user->setPassword($this->passwordEncoder->encodePassword($user, $this->defaultPassword));
+        $user->setPassword($this->defaultPassword);
 
         return $user;
     }
