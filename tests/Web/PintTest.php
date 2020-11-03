@@ -58,6 +58,13 @@ class PintTest extends WebTestCase
 
         $newPints = $this->getCurrentPintsTotal($client, 'Andy');
         $this->assertGreaterThan($currentPints, $newPints);
+        $currentPints = $newPints;
+
+        $client->request('GET', '/mypint');
+        $client->followRedirect();
+
+        $newPints = $this->getCurrentPintsTotal($client, 'Andy');
+        $this->assertGreaterThan($currentPints, $newPints);
     }
 
     private function getCurrentPintsTotal(KernelBrowser $client, $user): int

@@ -22,6 +22,6 @@ class PintRepository extends ServiceEntityRepository
 
     public function findByUserAndMatch($username, Match $match)
     {
-        return $this->findBy(['match' => $match, 'user' => $username]);
+        return $this->findOneBy(['match' => $match, 'user' => $username]);
     }
 }
