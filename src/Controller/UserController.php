@@ -53,11 +53,15 @@ class UserController extends AbstractController
         $user = $this->userProvider->loadUserByUsername($username);
         $predictionData = array_map(function (Prediction $prediction) {
             $goalData = array_reduce($prediction->getScores(), function ($goalData, Score $score) {
-                if (!isset($goalData[$score->getGoal()->getId()])) {
-                    $goalData[$score->getGoal()->getId()] = ['goal' => $score->getGoal(), 'reasons' => [], 'points' => 0];
+                $goal = $score->getGoal();
+                if (!$goal) {
+                    return [];
                 }
-                $goalData[$score->getGoal()->getId()]['points'] += $score->getPoints();
-                $goalData[$score->getGoal()->getId()]['reasons'][] = $this->scoreCalculator->getReasonName($score->getReason());
+                if (!isset($goalData[$goal->getId()])) {
+                    $goalData[$goal->getId()] = ['goal' => $goal, 'reasons' => [], 'points' => 0];
+                }
+                $goalData[$goal->getId()]['points'] += $score->getPoints();
+                $goalData[$goal->getId()]['reasons'][] = $this->scoreCalculator->getReasonName($score->getReason());
 
                 return $goalData;
             }, []);

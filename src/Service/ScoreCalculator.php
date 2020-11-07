@@ -14,6 +14,7 @@ class ScoreCalculator
     const CORRECT_TIME = 2;
     const CORRECT_POSITION = 3;
     const BONUS_POINT = 4;
+    const LEGACY = 5;
 
     const POINTS_STRIKERS = 1;
     const POINTS_MIDFIELDERS = 2;

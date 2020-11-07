@@ -76,9 +76,9 @@ class ImportOldSeasonCommand extends Command
         $this->import('matches', $seasonYear, function ($oldMatch) use ($season) {
             $match = (new Match())
                 ->setOpponent($oldMatch['opposition'])
-                ->setLocation($oldMatch['location'])
+                ->setLocation($oldMatch['location'] ?? 'unknown')
                 ->setDate(new DateTimeImmutable($oldMatch['match_date']))
-                ->setCompetition($oldMatch['type'])
+                ->setCompetition($oldMatch['type'] ?? 'unknown')
                 ->setSeason($season)
             ;
             $this->em->persist($match);
@@ -90,7 +90,7 @@ class ImportOldSeasonCommand extends Command
             $prediction = (new Prediction())
                 ->setMatch($match)
                 ->setPoints($oldPrediction['points'])
-                ->setAtMatch($oldPrediction['presence'])
+                ->setAtMatch($oldPrediction['presence'] ?? false)
                 ->setUser($oldPrediction['human'])
                 ->setTime($oldPrediction['time'])
                 ->setPosition($oldPrediction['position'])
@@ -105,8 +105,12 @@ class ImportOldSeasonCommand extends Command
             $goal = (new Goal())
                 ->setMatch($match)
                 ->setTiming($oldGoal['time'])
-                ->setScorer($oldGoal['scorer'])
             ;
+            if (isset($oldGoal['scorer'])) {
+                $goal->setScorer($oldGoal['scorer']);
+            } else {
+                $goal->setPosition($oldGoal['position']);
+            }
             $this->em->persist($goal);
         });
 
@@ -122,72 +126,73 @@ class ImportOldSeasonCommand extends Command
             $this->em->persist($pint);
         });
 
-        $this->import('scores', $seasonYear, function ($oldScore) {
-            $prediction = $this->oldPredictions[(int) $oldScore['prediction_id']];
-            $match = $prediction->getMatch();
-            $goals = $match->getGoals();
-            $this->logger->debug('Importing score', ['score' => $oldScore['id'], 'match' => $match->getId(), 'goals' => count($goals)]);
-            switch ((int) $oldScore['reason']) {
-                case ScoreCalculator::CORRECT_POSITION:
-                    $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
-                        $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
-                            return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::CORRECT_POSITION;
-                        });
-                        if (!empty($previousScores)) {
-                            return false;
-                        }
+        if ($seasonYear > 2015) {
+            $this->import('scores', $seasonYear, function ($oldScore) {
+                $prediction = $this->oldPredictions[(int) $oldScore['prediction_id']];
+                $match = $prediction->getMatch();
+                $goals = $match->getGoals();
+                $this->logger->debug('Importing score', ['score' => $oldScore['id'], 'match' => $match->getId(), 'goals' => count($goals)]);
+                switch ((int) $oldScore['reason']) {
+                    case ScoreCalculator::CORRECT_POSITION:
+                        $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
+                            $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
+                                return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::CORRECT_POSITION;
+                            });
+                            if (!empty($previousScores)) {
+                                return false;
+                            }
 
-                        return $goal->getPosition() === $prediction->getPosition();
-                    });
-                    break;
-                case ScoreCalculator::BONUS_POINT:
-                    $possibleGoals = array_filter($goals, function ($goal) use ($oldScore) {
-                        $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
-                            return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::BONUS_POINT;
+                            return $goal->getPosition() === $prediction->getPosition();
                         });
+                        break;
+                    case ScoreCalculator::BONUS_POINT:
+                        $possibleGoals = array_filter($goals, function ($goal) use ($oldScore) {
+                            $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
+                                return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::BONUS_POINT;
+                            });
 
-                        return empty($previousScores);
-                    });
-                    break;
-                case ScoreCalculator::CORRECT_TIME:
-                    $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
-                        $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
-                            return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::CORRECT_TIME;
+                            return empty($previousScores);
                         });
-                        if (!empty($previousScores)) {
-                            return false;
-                        }
+                        break;
+                    case ScoreCalculator::CORRECT_TIME:
+                        $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
+                            $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
+                                return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::CORRECT_TIME;
+                            });
+                            if (!empty($previousScores)) {
+                                return false;
+                            }
 
-                        return $goal->getTiming() === $prediction->getTime();
-                    });
-                    break;
-                case ScoreCalculator::CORRECT_HALF:
-                    $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
-                        $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
-                            return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::CORRECT_HALF;
+                            return $goal->getTiming() === $prediction->getTime();
                         });
-                        if (!empty($previousScores)) {
-                            return false;
-                        }
+                        break;
+                    case ScoreCalculator::CORRECT_HALF:
+                        $possibleGoals = array_filter($goals, function ($goal) use ($oldScore, $prediction) {
+                            $previousScores = array_filter($goal->getScores(), function (Score $score) use ($oldScore) {
+                                return $score->getPrediction()->getId() === (int) $oldScore['prediction_id'] && $score->getReason() === ScoreCalculator::CORRECT_HALF;
+                            });
+                            if (!empty($previousScores)) {
+                                return false;
+                            }
 
-                        return GoalTimes::matchesHalf($goal, $prediction);
-                    });
-                    break;
-                default:
-                    throw new RuntimeException('Unknown score reason '.json_encode($oldScore));
-            }
-            if (empty($possibleGoals)) {
-                throw new RuntimeException('No goals found '.json_encode($oldScore));
-            }
-            $goal = array_shift($possibleGoals);
-            $score = (new Score())
-                ->setPoints((float) $oldScore['points'])
-                ->setGoal($goal)
-                ->setPrediction($prediction)
-                ->setReason((int) $oldScore['reason'])
-            ;
-            $this->em->persist($score);
-        });
+                            return GoalTimes::matchesHalf($goal, $prediction);
+                        });
+                        break;
+                    default:
+                        throw new RuntimeException('Unknown score reason '.json_encode($oldScore));
+                }
+                if (empty($possibleGoals)) {
+                    throw new RuntimeException('No goals found '.json_encode($oldScore));
+                }
+                $goal = array_shift($possibleGoals);
+                $score = (new Score())
+                    ->setPoints((float) $oldScore['points'])
+                    ->setGoal($goal)
+                    ->setPrediction($prediction)
+                    ->setReason((int) $oldScore['reason']);
+                $this->em->persist($score);
+            });
+        }
 
         return 0;
     }

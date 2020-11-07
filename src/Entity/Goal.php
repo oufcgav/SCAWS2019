@@ -137,4 +137,11 @@ class Goal
 
         return $this;
     }
+
+    public function setPosition(string $position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
 }

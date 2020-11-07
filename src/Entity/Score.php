@@ -23,9 +23,9 @@ class Score
      */
     private $prediction;
     /**
-     * @var Goal
+     * @var Goal|null
      * @ORM\ManyToOne(targetEntity="Goal", inversedBy="scores")
-     * @ORM\JoinColumn(name="goal_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="goal_id", referencedColumnName="id", nullable=true)
      */
     private $goal;
     /**
@@ -84,7 +84,7 @@ class Score
         return $this;
     }
 
-    public function getGoal(): Goal
+    public function getGoal(): ?Goal
     {
         return $this->goal;
     }
