@@ -26,13 +26,14 @@ class PredictionTest extends WebTestCase
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
-        $form['prediction[atMatch]'] = 'yes';
+        $form['prediction[atMatch]'] = 'no';
         $form['prediction[nice_time]'] = 'no';
 
         $client->submit($form);
         $client->followRedirect();
         $this->assertContains($position, $client->getResponse()->getContent());
         $this->assertContains($time, $client->getResponse()->getContent());
+        $this->assertNotContains('At game', $client->getResponse()->getContent());
     }
 
     public function testEditPrediction()
