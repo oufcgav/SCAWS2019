@@ -7,7 +7,7 @@
     <h4>All predictions by {{ user.username }} for {{ seasonTitle }}</h4>
     <ul>
         {% for data in predictions %}
-        <li class="prediction">vs {{ data.match.opponent }} {% if data.match.location == 'Home' %}(H){% else %}(A){% endif %} on {{ data.match.date|date("D jS M, Y") }}
+        <li class="prediction">vs {{ data.match.opponent }} {% if data.match.location == 'Home' %}(H){% elseif data.match.location == 'Away' %}(A){% endif %} on {{ data.match.date|date("D jS M, Y") }}
             {{ data.prediction.position }} {{ data.prediction.time }} - {{ data.prediction.points }}pts
             <ul>
                 {% for goalData in data.goals %}
