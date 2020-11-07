@@ -52,8 +52,8 @@ class PredictionType extends AbstractType
             ->add('atMatch', ChoiceType::class, [
                 'label' => 'Are you going to the match? ',
                 'choices' => [
-                    'yes' => 'yes',
-                    'no' => 'no',
+                    'yes' => true,
+                    'no' => false,
                 ],
                 'expanded' => true,
                 'multiple' => false,

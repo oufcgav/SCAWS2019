@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
@@ -186,7 +187,7 @@ class Prediction
     {
         $metadata->addPropertyConstraint('position', new NotBlank());
         $metadata->addPropertyConstraint('time', new NotBlank());
-        $metadata->addPropertyConstraint('atMatch', new NotBlank());
+        $metadata->addPropertyConstraint('atMatch', new NotNull());
         $metadata->addPropertyConstraint('niceTime', new NotBlank());
     }
 }

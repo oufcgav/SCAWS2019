@@ -26,7 +26,7 @@ class PredictionTest extends WebTestCase
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
-        $form['prediction[atMatch]'] = 'no';
+        $form['prediction[atMatch]'] = 0;
         $form['prediction[nice_time]'] = 'no';
 
         $client->submit($form);
@@ -45,7 +45,7 @@ class PredictionTest extends WebTestCase
 
         $form['prediction[position]'] = $position = Positions::MIDFIELDERS()->getValue();
         $form['prediction[time]'] = $time = GoalTimes::SECOND_HALF()->getValue();
-        $form['prediction[atMatch]'] = 'yes';
+        $form['prediction[atMatch]'] = 1;
         $form['prediction[nice_time]'] = 'no';
 
         $client->submit($form);

@@ -56,7 +56,6 @@ class PredictionController extends AbstractController
         $form = $this->createForm(PredictionType::class, $prediction);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $prediction->setAtMatch($form->get('atMatch') === 'yes');
             $this->em->persist($prediction);
             $this->em->flush();
 
