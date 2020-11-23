@@ -114,7 +114,7 @@ class ScoreCalculatorTest extends TestCase
         $bonusPoints = array_filter($scores, function (Score $score) {
             return $score->getReason() === ScoreCalculator::BONUS_POINT;
         });
-        $this->assertGreaterThanOrEqual($expectedBonusPoints, count($bonusPoints));
+        $this->assertEquals($expectedBonusPoints, count($bonusPoints));
     }
 
     public function dataForBonusPoint()

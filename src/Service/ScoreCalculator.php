@@ -39,7 +39,7 @@ class ScoreCalculator
 
         foreach ($predictions as $prediction) {
             $predictionScores = [];
-            $bonusPointsAvailable = $prediction->getMatch()->qualifiesForBonusPoint();
+            $bonusPointsAvailable = $prediction->getAtMatch() && $prediction->getMatch()->qualifiesForBonusPoint();
             $predictionHasAlreadyScored = $prediction->hasScored();
             if ($goal->getPosition() === $prediction->getPosition()) {
                 switch ($goal->getPosition()) {
