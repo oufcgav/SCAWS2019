@@ -37,7 +37,7 @@
             <div class="nav-collapse">
                 <ul class="nav">
                     <li {% if 'table' == active %}class="active"{% endif %}><a href="{{ tablePath }}">{{ 'Table'|trans }}{{ seasonLabel }}</a></li>
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('ROLE_USER') %}
                         {% if currentSeason %}
                             <li {% if 'add_prediction' == active %}class="active"{% endif %}><a href="{{ path('add_prediction') }}">Add prediction</a></li>
                             <li {% if 'add_goal' == active %}class="active"{% endif %}><a href="{{ path('add_goal') }}">Add goal</a></li>
