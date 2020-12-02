@@ -67,6 +67,7 @@ class TableController extends AbstractController
                 'points' => 0,
                 'wins' => 0,
                 'pints' => 0,
+                'positions' => 0,
             ];
         }
         $seasons = $this->seasonList->findAll();
@@ -83,6 +84,7 @@ class TableController extends AbstractController
                 if ($entry->getCurrentPosition() === 1 && $season !== $currentSeason) {
                     $table[$entry->getUser()]['wins']++;
                 }
+                $table[$entry->getUser()]['positions']+= (8 - $entry->getCurrentPosition());
                 $table[$entry->getUser()]['pints']+= $entry->getPints();
             }
             arsort($seasonPoints);

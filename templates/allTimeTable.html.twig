@@ -5,13 +5,14 @@
 {% block content %}
     <h4>All-time table</h4>
     <div class="float left span12">
-    <table class="table span5">
+    <table class="table span6">
         <thead>
         <tr>
             <th class="span2">Name</th>
             <th class="span1">Pints</th>
             <th class="span1">Wins</th>
-            <th class="span1">Points</th>
+            <th class="span1">Pos. Points</th>
+            <th class="span1">% Points</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +22,9 @@
                 <td class="pints">{{ data.pints }}</td>
                 <td>{{ data.wins }}</td>
                 <td class="points text-right">
+                    {{ data.positions }}
+                </td>
+                <td class="points text-right">
                     {{ data.points|number_format(1) }}
                 </td>
             </tr>
@@ -29,12 +33,15 @@
     </table>
     </div>
     <div class="float left span12">
-    <div class="float left span5">
-    <p>
-        Note: points are calculated as a percentage of the winner's points for each season.
-        So the season winner gets 100 all-time points, then if you got half the points total of the winner,
-        you get 50 all-time points.
-    </p>
-    </div>
+        <div class="float left span5">
+            <dl>
+                <dt>% points</dt>
+                <dd>These are calculated as a percentage of the winner's points for each season.
+                    So the season winner gets 100 all-time points, then if you got half the points total of the winner,
+                    you get 50 all-time points.</dd>
+                <dt>Pos. points</dt>
+                <dd>These are calculated using 7 points for a season win down to 1 point for a season wooden spoon.</dd>
+            </dl>
+        </div>
     </div>
 {% endblock %}
