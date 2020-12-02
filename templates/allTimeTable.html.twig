@@ -4,7 +4,8 @@
 
 {% block content %}
     <h4>All-time table</h4>
-    <table class="table span7">
+    <div class="float left span12">
+    <table class="table span5">
         <thead>
         <tr>
             <th class="span2">Name</th>
@@ -26,9 +27,14 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
+    <div class="float left span12">
+    <div class="float left span5">
     <p>
         Note: points are calculated as a percentage of the winner's points for each season.
         So the season winner gets 100 all-time points, then if you got half the points total of the winner,
         you get 50 all-time points.
     </p>
+    </div>
+    </div>
 {% endblock %}
