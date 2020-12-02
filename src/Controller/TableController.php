@@ -52,7 +52,14 @@ class TableController extends AbstractController
         $users = $this->userProvider->getUsers();
         $table = $this->pointsTable->loadCurrent($season, $users, $nextMatch);
 
-        return $this->render('table.html.twig', ['table' => $table, 'season' => $season]);
+        return $this->render('table.html.twig',
+            [
+                'table' => $table,
+                'season' => $season,
+                'previous' => $this->seasonList->findPreviousSeason($season),
+                'next' => $this->seasonList->findNextSeason($season),
+            ]
+        );
     }
 
     /**

@@ -75,4 +75,9 @@ class Season
 
         return $this;
     }
+
+    public function getEndDate(): DateTimeImmutable
+    {
+        return $this->endDate;
+    }
 }

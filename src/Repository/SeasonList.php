@@ -26,4 +26,30 @@ class SeasonList extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findPreviousSeason(Season $season): ?Season
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.endDate < :startDate')
+            ->setParameter('startDate', $season->getStartDate()->format('Y-m-d'))
+            ->orderBy('s.endDate', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findNextSeason(Season $season): ?Season
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.startDate > :endDate')
+            ->setParameter('endDate', $season->getEndDate()->format('Y-m-d'))
+            ->orderBy('s.startDate', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
 }
