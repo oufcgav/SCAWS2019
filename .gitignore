@@ -70,7 +70,7 @@
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-*.sql
+sqldumps/
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
 /phpcs.xml
