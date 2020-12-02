@@ -3,31 +3,11 @@
 {% set active = 'table' %}
 
 {% block content %}
-    <div class="span12 pagination text-center">
-        <div class="span2 left">
-            {% if previous %}
-                {% set seasonPath = previous.isCurrent ? path('table') : path('table_old', { season: previous.id })  %}
-                <a href="{{ seasonPath }}"><i class="icon-backward"></i> {{ previous.label }}</a>
-            {% else %}
-                &nbsp;
-            {% endif %}
-        </div>
-        <div class="span3 left">
-            {% if currentSeason %}
-                <h4>Current table</h4>
-            {% else %}
-                <h4>Final table for {{ season.label }} season</h4>
-            {% endif %}
-        </div>
-        <div class="span2 left">
-            {% if next %}
-                {% set seasonPath = next.isCurrent ? path('table') : path('table_old', { season: next.id })  %}
-                <a href="{{ seasonPath }}">{{ next.label }} <i class="icon-forward right"></i></a>
-            {% else %}
-                &nbsp;
-            {% endif %}
-        </div>
-    </div>
+    {% if currentSeason %}
+        <h4>Current table</h4>
+    {% else %}
+        <h4>Final table for {{ season.label }} season</h4>
+    {% endif %}
     <table class="table span7">
         <thead>
         <tr>
@@ -71,4 +51,23 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="span12 pagination text-center">
+        <div class="span2 left">
+            {% if previous %}
+                {% set seasonPath = previous.isCurrent ? path('table') : path('table_old', { season: previous.id })  %}
+                <a href="{{ seasonPath }}"><i class="icon-backward"></i> {{ previous.label }}</a>
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+        <div class="span3">&nbsp;</div>
+        <div class="span2 left">
+            {% if next %}
+                {% set seasonPath = next.isCurrent ? path('table') : path('table_old', { season: next.id })  %}
+                <a href="{{ seasonPath }}">{{ next.label }} <i class="icon-forward right"></i></a>
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
