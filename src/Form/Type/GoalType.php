@@ -24,8 +24,8 @@ class GoalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $squad = $this->squadList->getCurrentSquad();
-        $scorers = array_combine($squad, $squad);
-        $times = array_combine(array_values(GoalTimes::toArray()), array_values(GoalTimes::toArray()));
+        $scorers = array_merge(['Select player' => ''], array_combine($squad, $squad));
+        $times = array_merge(['Select time' => ''], array_combine(array_values(GoalTimes::toArray()), array_values(GoalTimes::toArray())));
         $times['Extra time/other'] = 'Extra time/other';
         unset($times[GoalTimes::FIRST_HALF()->getValue()]);
         unset($times[GoalTimes::SECOND_HALF()->getValue()]);

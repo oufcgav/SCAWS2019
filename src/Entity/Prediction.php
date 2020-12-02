@@ -44,7 +44,7 @@ class Prediction
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $atMatch = false;
+    private $atMatch;
 
     /**
      * @var Match
@@ -63,7 +63,7 @@ class Prediction
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $niceTime = 'no';
+    private $niceTime;
 
     /**
      * @var Collection
@@ -188,6 +188,6 @@ class Prediction
         $metadata->addPropertyConstraint('position', new NotBlank());
         $metadata->addPropertyConstraint('time', new NotBlank());
         $metadata->addPropertyConstraint('atMatch', new NotNull());
-        $metadata->addPropertyConstraint('niceTime', new NotBlank());
+        $metadata->addPropertyConstraint('niceTime', new NotNull());
     }
 }

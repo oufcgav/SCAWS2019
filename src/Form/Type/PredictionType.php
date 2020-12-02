@@ -38,9 +38,9 @@ class PredictionType extends AbstractType
         if (!$user || !$user instanceof User) {
             throw new RuntimeException('Not logged in');
         }
-        $availablePositions = $this->predictionRestriction->getPositions($user);
+        $availablePositions = array_merge(['Select position' => ''], $this->predictionRestriction->getPositions($user));
         unset($availablePositions[Positions::GOALKEEPER()->getValue()]);
-        $availableTimes = $this->predictionRestriction->getTimings($user);
+        $availableTimes = array_merge(['Select time' => ''], $this->predictionRestriction->getTimings($user));
 
         $builder
             ->add('position', ChoiceType::class, [
