@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Match;
 use App\Entity\Score;
 use App\Entity\Season;
+use App\Entity\TableEntry;
 use App\Security\User;
 use App\Service\ScoreCalculator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -125,5 +126,27 @@ class PointsTable extends ServiceEntityRepository
         }
 
         return array_values($table);
+    }
+
+    public function getLastMatchSaved(): int
+    {
+        $sql = 'SELECT MAX(match_id) AS last_match FROM table_entry';
+        $result = $this->_em->getConnection()->fetchOne($sql);
+
+        return (int)$result['last_match'] ?? 0;
+    }
+
+    /**
+     * @return TableEntry[]
+     */
+    public function loadSavedTable(Match $match): array
+    {
+        $query = $this->_em->createQuery('
+            SELECT te FROM App\Entity\TableEntry te 
+            WHERE te.match = :match
+            ');
+        $query->setParameter('match', $match);
+
+        return $query->getResult();
     }
 }

@@ -5,7 +5,10 @@ namespace App\Repository;
 use App\Entity\Match;
 use App\Entity\Season;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 class FixtureList extends ServiceEntityRepository
 {
@@ -40,5 +43,20 @@ class FixtureList extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findLastMatch(Season $season): ?Match
+    {
+        try {
+            return $this->createQueryBuilder('m')
+                ->where('m.season = :season')
+                ->orderBy('m.date', 'DESC')
+                ->setParameter('season', $season)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getSingleResult();
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }

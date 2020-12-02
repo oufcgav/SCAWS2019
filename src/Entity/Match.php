@@ -117,6 +117,11 @@ class Match
         return $this->id;
     }
 
+    public function getSeason(): Season
+    {
+        return $this->season;
+    }
+
     public function setSeason(Season $season): Match
     {
         $this->season = $season;

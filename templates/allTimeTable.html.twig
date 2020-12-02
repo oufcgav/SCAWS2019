@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+{% set currentSeason = true %}
+{% set active = 'table' %}
+
+{% block content %}
+    <h4>All-time table</h4>
+    <table class="table span7">
+        <thead>
+        <tr>
+            <th class="span2">Name</th>
+            <th class="span1">Pints</th>
+            <th class="span1">Wins</th>
+            <th class="span1">Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user,data in table %}
+            <tr id="{{ user }}">
+                <td>{{ user }}</td>
+                <td class="pints">{{ data.pints }}</td>
+                <td>{{ data.wins }}</td>
+                <td class="points text-right">
+                    {{ data.points|number_format(1) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

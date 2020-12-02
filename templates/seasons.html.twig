@@ -8,5 +8,6 @@
             {% set seasonPath = season.isCurrent ? path('table') : path('table_old', { season: season.id })  %}
             <li><a href="{{ seasonPath }}">{{ season.label }}</a></li>
         {% endfor %}
+        <li><a href="{{ path('all_time_table') }}">All-time</a></li>
     </ul>
 {% endblock %}
