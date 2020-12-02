@@ -6262,6 +6262,10 @@ select {
 ul#goals-list {
   list-style-image: url('../../img/football.png');
 }
+.navbar,
+.navbar-inner {
+  min-height: 45px;
+}
 .table-change {
   vertical-align: middle;
 }

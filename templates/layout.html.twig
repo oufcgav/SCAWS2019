@@ -32,21 +32,21 @@
                 <span class="icon-bar"></span>
             </a>
             {% set tablePath = currentSeason ? path('table') : path('table_old', { season: season.id })  %}
-            {% set seasonLabel = currentSeason ? '' : " #{season.label}" %}
+            {% set seasonLabel = currentSeason ? 'Current Table' : "Table #{season.label}" %}
             <a class="brand" href="{{ path('homepage') }}">{{ 'SCAWS!'|trans }}</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li {% if 'table' == active %}class="active"{% endif %}><a href="{{ tablePath }}">{{ 'Table'|trans }}{{ seasonLabel }}</a></li>
+                    <li {% if 'table' == active %}class="active"{% endif %}><a href="{{ tablePath }}">{{ seasonLabel|trans }}</a></li>
                     {% if is_granted('ROLE_USER') %}
+                        {% if enable_seasons %}
+                            <li {% if 'seasons' == active %}class="active"{% endif %}><a href="{{ path('list_seasons') }}">Seasons</a></li>
+                        {% endif %}
                         {% if currentSeason %}
                             <li {% if 'add_prediction' == active %}class="active"{% endif %}><a href="{{ path('add_prediction') }}">Add prediction</a></li>
                             <li {% if 'add_goal' == active %}class="active"{% endif %}><a href="{{ path('add_goal') }}">Add goal</a></li>
                             <li {% if 'add_match' == active %}class="active"{% endif %}><a href="{{ path('add_match') }}">Add match</a></li>
                             <li {% if 'add_pint' == active %}class="active"{% endif %}><a href="{{ path('add_pint') }}">Add pint</a></li>
                             <li><a href="{{ path('add_my_pint') }}"><img src="{{ app.request.basepath }}/img/pint.png" alt="I'm getting pissed" /></a></li>
-                        {% endif %}
-                        {% if enable_seasons %}
-                            <li {% if 'seasons' == active %}class="active"{% endif %}><a href="{{ path('list_seasons') }}">Seasons</a></li>
                         {% endif %}
                         <li><a href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a></li>
                     {% else %}
