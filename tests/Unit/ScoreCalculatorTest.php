@@ -46,7 +46,7 @@ class ScoreCalculatorTest extends TestCase
         return [
             'Strikers score 1 point' => ['Matty Taylor (S)', Positions::STRIKERS()->getValue(), 1],
             'Midfielders score 2 points' => ['Cameron Brannagan (M)', Positions::MIDFIELDERS()->getValue(), 2],
-            'Defenders score 3 points' => ['Joshua Ruffels (D)', Positions::DEFENDERS()->getValue(), 3],
+            'Defenders score 4 points' => ['Joshua Ruffels (D)', Positions::DEFENDERS()->getValue(), 4],
         ];
     }
 

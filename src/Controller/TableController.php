@@ -91,8 +91,8 @@ class TableController extends AbstractController
                 if ($entry->getCurrentPosition() === 1 && $season !== $currentSeason) {
                     $table[$entry->getUser()]['wins']++;
                 }
-                $table[$entry->getUser()]['positions']+= (8 - $entry->getCurrentPosition());
-                $table[$entry->getUser()]['pints']+= $entry->getPints();
+                $table[$entry->getUser()]['positions'] += 8 - $entry->getCurrentPosition();
+                $table[$entry->getUser()]['pints'] += $entry->getPints();
             }
             arsort($seasonPoints);
             $maxPoints = reset($seasonPoints);
@@ -100,13 +100,14 @@ class TableController extends AbstractController
                 continue;
             }
             foreach ($seasonPoints as $user => $points) {
-                $table[$user]['points']+= ($points / $maxPoints) * 100;
+                $table[$user]['points'] += $points / $maxPoints * 100;
             }
         }
         uasort($table, function ($a, $b) {
             if ($a['points'] === $b['points']) {
                 return $b['wins'] <=> $a['wins'];
             }
+
             return $b['points'] <=> $a['points'];
         });
 

@@ -50,6 +50,4 @@ class SeasonList extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-
-
 }

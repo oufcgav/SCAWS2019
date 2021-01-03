@@ -133,7 +133,7 @@ class PointsTable extends ServiceEntityRepository
         $sql = 'SELECT MAX(match_id) AS last_match FROM table_entry';
         $result = $this->_em->getConnection()->fetchOne($sql);
 
-        return (int)$result['last_match'] ?? 0;
+        return (int) $result['last_match'] ?? 0;
     }
 
     /**

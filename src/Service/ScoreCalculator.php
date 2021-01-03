@@ -18,7 +18,7 @@ class ScoreCalculator
 
     const POINTS_STRIKERS = 1;
     const POINTS_MIDFIELDERS = 2;
-    const POINTS_DEFENDERS = 3;
+    const POINTS_DEFENDERS = 4;
     const POINTS_HALF = 1;
     const POINTS_TIME = 3;
     const POINTS_STOPPAGE_BONUS = 1.5;
