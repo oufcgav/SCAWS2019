@@ -39,7 +39,6 @@ class SquadList
                 'Olamide Shodipo (S)',
                 'Dylan Asonganyi (S)',
                 'Derick Osei Yaw (S)',
-                'Slavi Spasov (S)',
                 'Elliot Lee (S)',
                 'Dan! (S)',
                 'Other (S)',
