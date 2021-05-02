@@ -44,6 +44,9 @@
     "doctrine/dbal": {
         "version": "v2.9.2"
     },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "1.6",
         "recipe": {
@@ -117,6 +120,9 @@
     "jean85/pretty-package-versions": {
         "version": "1.5.1"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.2.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -139,7 +145,7 @@
         "version": "2.1.1"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -421,6 +427,9 @@
     },
     "symfony/property-info": {
         "version": "v4.3.1"
+    },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.1.11"
     },
     "symfony/routing": {
         "version": "4.2",
