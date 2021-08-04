@@ -19,7 +19,6 @@ class UserProvider implements UserProviderInterface
     {
         $this->users = [
            
-            'Andy',
             'Blochy',
             'Deadly',
             'Gav',
