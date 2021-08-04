@@ -18,13 +18,12 @@ class UserProvider implements UserProviderInterface
     public function __construct(string $defaultPassword)
     {
         $this->users = [
-           
+            'Andy',
             'Blochy',
             'Deadly',
             'Gav',
             'Just',
-            'Malc',
-	    'Smudger',
+            'Smudger',
             'Stu',
         ];
         $this->defaultPassword = $defaultPassword;
