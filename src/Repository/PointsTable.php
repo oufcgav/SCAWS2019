@@ -67,14 +67,16 @@ class PointsTable extends ServiceEntityRepository
         foreach ($stats as $position => $userStats) {
             /** @var User $user */
             $user = $users[$userStats['user']];
-            $user->setTableData(
-                (int) $userStats['played'],
-                (int) $userStats['pints_drunk'],
-                (int) $userStats['bonus_points'],
-                (float) $userStats['points'],
-                $position
-            );
-            $table[] = $user;
+            if ($user) {
+                $user->setTableData(
+                    (int)$userStats['played'],
+                    (int)$userStats['pints_drunk'],
+                    (int)$userStats['bonus_points'],
+                    (float)$userStats['points'],
+                    $position
+                );
+                $table[] = $user;
+            }
         }
         if ($currentMatch) {
             $sql = 'SELECT p.user,
