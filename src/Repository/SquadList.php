@@ -10,7 +10,6 @@ class SquadList
             [
                 'Simon Eastwood (GK)',
                 'Jack Stevens (GK)',
-                'Joshua Ruffels (D)',
                 'Elliott Moore (D)',
                 'Sam Long (D)',
                 'John Mousinho (D)',
@@ -22,7 +21,7 @@ class SquadList
                 'Alejandro Gorrin (M)',
                 'Cameron Brannagan (M)',
                 'Mark Sykes (M)',
-                'Anthony Forde  (M)',
+                'Anthony Forde (M)',
                 'Joel Cooper (M)',
                 'Marcus McGuane (M)',
                 'Jamie Hanson (M)',
