@@ -22,7 +22,7 @@ class SquadList
                 'Cameron Brannagan (M)',
                 'Mark Sykes (M)',
                 'Anthony Forde (M)',
-                'Joel Cooper (M)',
+                'Marcus Browne (M)',
                 'Marcus McGuane (M)',
                 'Jamie Hanson (M)',
                 'Ryan Williams (M)',
