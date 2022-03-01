@@ -36,7 +36,7 @@ class SquadList
                 'Sam Baldock (S)',
                 'Billy Bodin (S)',
                 'Nathan Holland (S)',
-                'Derick Osei Yaw (S)',
+                'Joel Cooper (S)',
                 'Dan! (S)',
                 'Other (S)',
                 'Own goal (O)',
