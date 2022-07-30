@@ -29,6 +29,7 @@ class SquadList
                 'Oisin Smyth (M)',
                 'Other (M)',
                 'Yanic Wildschut (S)',
+                'Jodi Jones (S)',
                 'Matty Taylor (S)',
                 'Sam Baldock (S)',
                 'Billy Bodin (S)',
