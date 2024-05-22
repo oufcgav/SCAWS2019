@@ -9,13 +9,11 @@ class SquadList
         return
             [
                 'Simon Eastwood (GK)',
-                'Jamie Cumming (GK)',
                 'Elliott Moore (D)',
                 'Sam Long (D)',
                 'Jordan Thorniley (D)',
                 'Finley Stevens (D)',
                 'Ciaron Brown (D)',
-                'James Golding (D)',
                 'Stephan Negru (D)',
                 'Greg Leigh (D)',
                 'Joe Bennett (D)',
@@ -33,10 +31,7 @@ class SquadList
                 'Will Goodwin (S)',
                 'Ruben Rodrigues (S)',
                 'Marcus Browne (S)',
-                'Tyler Burey (S)',
                 'Max Woltman (S)',
-                'Billy Bodin (S)',
-                'Dan! (S)',
                 'Other (S)',
                 'Own goal (O)',
             ];
