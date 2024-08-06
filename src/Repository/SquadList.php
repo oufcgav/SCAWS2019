@@ -10,7 +10,7 @@ class SquadList
             [
                 'Jamie Cumming (GK)'
                 'Simon Eastwood (GK)'
-                'Jacob Knightsbridge (GK)',
+                'Matt Ingram (GK)',
                 'Elliott Moore (D)',
                 'Sam Long (D)',
                 'Jordan Thorniley (D)',
@@ -19,8 +19,8 @@ class SquadList
                 'Jack Currie (D)',
                 'Greg Leigh (D)',
                 'Joe Bennett (D)',
-                'Idris El Mizouni (D)',
                 'Other (D)',
+                'Idris El Mizouni (M)',
                 'Josh McEachran (M)',
                 'Cameron Brannagan (M)',
                 'Louie Sibley (M)',
@@ -28,12 +28,15 @@ class SquadList
                 'Will Vaulks (M)',
                 'Max Woltman (M)',
                 'Tyler Goodrham (M)',
+                'Matt Phillips (M)',
                 'Other (M)',
                 'Mark Harris (S)',
                 'Will Goodwin (S)',
                 'Ruben Rodrigues (S)',
                 'Galtlin ODonker (S)',
                 'Owen Dale (S)',
+                'Malcolm Ebiowei (S)',
+                'Przemysław Płacheta (S)',
                 'Other (S)',
                 'Own goal (O)',
             ];
