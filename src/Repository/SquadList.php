@@ -36,6 +36,7 @@ class SquadList
                 'Galtlin ODonker (S)',
                 'Owen Dale (S)',
                 'Malcolm Ebiowei (S)',
+                'Dane Scarlett (S)',
                 'Przemysław Płacheta (S)',
                 'Other (S)',
                 'Own goal (O)',
