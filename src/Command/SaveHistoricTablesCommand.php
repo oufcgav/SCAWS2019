@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\TableEntry;
 use App\Repository\FixtureList;
 use App\Repository\PointsTable;
@@ -53,7 +53,7 @@ class SaveHistoricTablesCommand extends Command
         $lastMatchSaved = $this->fixtureList->find($lastMatchSaved);
         $allMatches = $this->fixtureList->findAll();
         if ($lastMatchSaved) {
-            $matchesToSave = array_filter($allMatches, function (Match $match) use ($lastMatchSaved) {
+            $matchesToSave = array_filter($allMatches, function (MatchDay $match) use ($lastMatchSaved) {
                 return $match->getId() > $lastMatchSaved->getId();
             });
         } else {

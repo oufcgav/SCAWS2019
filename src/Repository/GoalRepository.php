@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Goal;
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,7 +20,7 @@ class GoalRepository extends ServiceEntityRepository
         parent::__construct($registry, Goal::class);
     }
 
-    public function findByMatch(Match $match)
+    public function findByMatch(MatchDay $match)
     {
         return $this->findBy(['match' => $match]);
     }

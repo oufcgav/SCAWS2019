@@ -38,7 +38,7 @@ class GoalTest extends WebTestCase
 
         $client->submit($form);
         $client->followRedirect();
-        $this->assertContains($player, $client->getResponse()->getContent());
-        $this->assertContains($timing, $client->getResponse()->getContent());
+        $this->assertStringContainsString($player, $client->getResponse()->getContent());
+        $this->assertStringContainsString($timing, $client->getResponse()->getContent());
     }
 }

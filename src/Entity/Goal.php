@@ -36,8 +36,8 @@ class Goal
      */
     private $position = '';
     /**
-     * @var Match
-     * @ORM\ManyToOne(targetEntity="Match", inversedBy="goals")
+     * @var MatchDay
+     * @ORM\ManyToOne(targetEntity="MatchDay", inversedBy="goals")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     private $match;
@@ -75,7 +75,7 @@ class Goal
         return $this->position;
     }
 
-    public function getMatch(): Match
+    public function getMatch(): MatchDay
     {
         return $this->match;
     }
@@ -123,7 +123,7 @@ class Goal
         return $this;
     }
 
-    public function setMatch(Match $match): self
+    public function setMatch(MatchDay $match): self
     {
         $this->match = $match;
         $match->addGoal($this);

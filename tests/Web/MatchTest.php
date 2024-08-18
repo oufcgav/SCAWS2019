@@ -11,7 +11,7 @@ class MatchTest extends WebTestCase
     {
         $client = $this->login();
         $client->request('GET', '/');
-        $this->assertContains('No current match', $client->getResponse()->getContent());
+        $this->assertStringContainsString('No current match', $client->getResponse()->getContent());
     }
 
     public function testAddNewMatch()
@@ -26,7 +26,7 @@ class MatchTest extends WebTestCase
 
         $client->submit($form);
         $client->followRedirect();
-        $this->assertContains($opposition, $client->getResponse()->getContent());
+        $this->assertStringContainsString($opposition, $client->getResponse()->getContent());
     }
 
     public function testEditMatch()

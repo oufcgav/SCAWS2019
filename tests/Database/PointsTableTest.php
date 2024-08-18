@@ -19,7 +19,7 @@ class PointsTableTest extends BaseTestCase
      */
     private $users;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -72,7 +72,7 @@ class PointsTableTest extends BaseTestCase
         $this->createPrediction('Smudger', Positions::DEFENDERS()->getValue(), 'Second Half', $firstMatch)
             ->setPoints(1)
         ;
-        $secondMatch = $this->createMatch($season, 'Current Match', new DateTimeImmutable());
+        $secondMatch = $this->createMatch($season, 'Current MatchDay', new DateTimeImmutable());
         $this->em->flush();
         $this->createPrediction('Andy')
             ->setPoints(3)

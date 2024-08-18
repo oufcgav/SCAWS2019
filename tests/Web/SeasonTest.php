@@ -13,7 +13,7 @@ class SeasonTest extends WebTestCase
             ->eq(0)
             ->link();
         $client->click($link);
-        $this->assertContains('Old season', $client->getResponse()->getContent());
-        $this->assertContains('Current season', $client->getResponse()->getContent());
+        $this->assertStringContainsString('Old season', $client->getResponse()->getContent());
+        $this->assertStringContainsString('Current season', $client->getResponse()->getContent());
     }
 }

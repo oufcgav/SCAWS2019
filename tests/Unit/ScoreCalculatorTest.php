@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Entity\Goal;
 use App\Entity\GoalTimes;
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Score;
@@ -174,7 +174,7 @@ class ScoreCalculatorTest extends TestCase
 
     private function createMatch($bonusPoints = false)
     {
-        return (new Match())
+        return (new MatchDay())
             ->setOpponent('Unit Test FC')
             ->setDate(new \DateTimeImmutable())
             ->setLocation('Home')

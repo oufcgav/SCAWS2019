@@ -3,7 +3,7 @@
 namespace App\Tests\Database;
 
 use App\Entity\GoalTimes;
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Positions;
 use App\Entity\Prediction;
 use App\Entity\Season;
@@ -26,7 +26,7 @@ class BaseTestCase extends KernelTestCase
      */
     protected $faker;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         self::bootKernel();
 
@@ -45,7 +45,7 @@ class BaseTestCase extends KernelTestCase
         return $season;
     }
 
-    protected function createPrediction($user, $position = null, $timing = null, ?Match $match = null): Prediction
+    protected function createPrediction($user, $position = null, $timing = null, ?MatchDay $match = null): Prediction
     {
         $position = $position ?? Positions::DEFENDERS()->getValue();
         $timing = $timing ?? GoalTimes::SECOND_HALF()->getValue();
@@ -62,9 +62,9 @@ class BaseTestCase extends KernelTestCase
         return $prediction;
     }
 
-    protected function createMatch(Season $season, string $opponent, DateTimeImmutable $date): Match
+    protected function createMatch(Season $season, string $opponent, DateTimeImmutable $date): MatchDay
     {
-        $match = (new Match())
+        $match = (new MatchDay())
             ->setSeason($season)
             ->setCompetition('League')
             ->setDate($date)

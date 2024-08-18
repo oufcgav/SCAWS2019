@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  * @ORM\Entity(repositoryClass="App\Repository\FixtureList")
  * @ORM\Table(name="`match`")
  */
-class Match
+class MatchDay
 {
     /**
      * @ORM\Id
@@ -122,7 +122,7 @@ class Match
         return $this->season;
     }
 
-    public function setSeason(Season $season): Match
+    public function setSeason(Season $season): MatchDay
     {
         $this->season = $season;
 
