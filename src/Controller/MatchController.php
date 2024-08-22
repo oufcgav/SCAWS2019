@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Form\Type\MatchType;
 use App\Repository\FixtureList;
 use App\Repository\SeasonList;
@@ -45,7 +45,7 @@ class MatchController extends AbstractController
         $match = $this->fixtureList->findNextMatch();
         $season = $this->seasonList->findCurrentSeason();
         if (!$match) {
-            $match = (new Match())
+            $match = (new MatchDay())
                 ->setSeason($season)
             ;
         }

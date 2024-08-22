@@ -31,9 +31,9 @@ class PredictionTest extends WebTestCase
 
         $client->submit($form);
         $client->followRedirect();
-        $this->assertContains($position, $client->getResponse()->getContent());
-        $this->assertContains($time, $client->getResponse()->getContent());
-        $this->assertNotContains('At game', $client->getResponse()->getContent());
+        $this->assertStringContainsString($position, $client->getResponse()->getContent());
+        $this->assertStringContainsString($time, $client->getResponse()->getContent());
+        $this->assertStringNotContainsString('At game', $client->getResponse()->getContent());
     }
 
     public function testEditPrediction()
@@ -53,7 +53,7 @@ class PredictionTest extends WebTestCase
 
         $form = $this->getAddPredictionForm($client);
         $this->assertEquals($position, $form['prediction[position]']->getValue());
-        $this->assertContains($time, $form['prediction[time]']->getValue());
+        $this->assertStringContainsString($time, $form['prediction[time]']->getValue());
     }
 
     protected function getAddPredictionForm(KernelBrowser $client): ?Form

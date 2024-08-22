@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Season;
 use App\Repository\FixtureList;
 
@@ -18,7 +18,7 @@ class PositionResetter
         $this->fixtureList = $fixtureList;
     }
 
-    public function reset(Season $season, Match $match): Match
+    public function reset(Season $season, MatchDay $match): MatchDay
     {
         $matchesInSeason = $this->fixtureList->findPreviousMatches($season, $match);
         if (empty($matchesInSeason)) {
@@ -26,7 +26,7 @@ class PositionResetter
 
             return $match;
         }
-        $lastReset = array_reduce($matchesInSeason, function (?Match $lastReset, Match $match) {
+        $lastReset = array_reduce($matchesInSeason, function (?MatchDay $lastReset, MatchDay $match) {
             if (!$lastReset) {
                 return $match->resetPositionChoices() ? $match : null;
             }
@@ -39,7 +39,7 @@ class PositionResetter
 
             return $lastReset;
         }, null);
-        $matchesSinceReset = array_filter($matchesInSeason, function (Match $match) use ($lastReset) {
+        $matchesSinceReset = array_filter($matchesInSeason, function (MatchDay $match) use ($lastReset) {
             return !$lastReset || $match->getDate() > $lastReset->getDate();
         });
         if (count($matchesSinceReset) >= 2) {

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Prediction;
 use App\Entity\Season;
 use App\Security\User;
@@ -31,12 +31,12 @@ class PredictionRepository extends ServiceEntityRepository
         $this->logger = $logger;
     }
 
-    public function findByMatch(Match $match)
+    public function findByMatch(MatchDay $match)
     {
         return $this->findBy(['match' => $match]);
     }
 
-    public function findByMatchAndUser(Match $match, User $user)
+    public function findByMatchAndUser(MatchDay $match, User $user)
     {
         return $this->findOneBy(['match' => $match, 'user' => $user->getUsername()]);
     }
@@ -59,7 +59,7 @@ class PredictionRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getLastTimePeriodPredicted(Match $currentMatch, string $human)
+    public function getLastTimePeriodPredicted(MatchDay $currentMatch, string $human)
     {
         $sql = 'SELECT time 
                     FROM prediction p
@@ -84,7 +84,7 @@ class PredictionRepository extends ServiceEntityRepository
         );
     }
 
-    public function getExcludedPositions(Match $currentMatch, $human)
+    public function getExcludedPositions(MatchDay $currentMatch, $human)
     {
         $positionsExcluded = $this->getLastPredictions($currentMatch, $human, 3);
         $this->logger->info('Excluding positions:', ['excluded' => $positionsExcluded]);
@@ -92,7 +92,7 @@ class PredictionRepository extends ServiceEntityRepository
         return count($positionsExcluded) < 3 ? $positionsExcluded : [];
     }
 
-    public function getLastPredictions(Match $currentMatch, $human, $numPredictions)
+    public function getLastPredictions(MatchDay $currentMatch, $human, $numPredictions)
     {
         $this->logger->info('Getting last  predictions', ['num' => $numPredictions, 'user' => $human, 'match' => $currentMatch]);
         if ($currentMatch->resetPositionChoices()) {

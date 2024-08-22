@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Pint;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,7 +20,7 @@ class PintRepository extends ServiceEntityRepository
         parent::__construct($registry, Pint::class);
     }
 
-    public function findByUserAndMatch($username, Match $match)
+    public function findByUserAndMatch($username, MatchDay $match)
     {
         return $this->findOneBy(['match' => $match, 'user' => $username]);
     }

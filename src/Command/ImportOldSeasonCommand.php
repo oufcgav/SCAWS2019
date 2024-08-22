@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\Entity\Goal;
 use App\Entity\GoalTimes;
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Pint;
 use App\Entity\Prediction;
 use App\Entity\Score;
@@ -32,7 +32,7 @@ class ImportOldSeasonCommand extends Command
      */
     private $seasonList;
     /**
-     * @var Match[]
+     * @var MatchDay[]
      */
     private $oldMatches = [];
     /**
@@ -74,7 +74,7 @@ class ImportOldSeasonCommand extends Command
         }
 
         $this->import('matches', $seasonYear, function ($oldMatch) use ($season) {
-            $match = (new Match())
+            $match = (new MatchDay())
                 ->setOpponent($oldMatch['opposition'])
                 ->setLocation($oldMatch['location'] ?? 'unknown')
                 ->setDate(new DateTimeImmutable($oldMatch['match_date']))

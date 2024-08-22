@@ -11,7 +11,7 @@ class UserTest extends WebTestCase
     {
         $client = $this->login();
         $client->request('GET', '/user/Andy');
-        $this->assertContains('All predictions by Andy', $client->getResponse()->getContent());
+        $this->assertStringContainsString('All predictions by Andy', $client->getResponse()->getContent());
     }
 
     public function testUserPageShowsPredictions()
@@ -23,8 +23,8 @@ class UserTest extends WebTestCase
         $this->addPrediction($client, 'Andy', $position, $timing);
         $scores = $client->request('GET', '/user/Andy');
         $this->assertGreaterThanOrEqual(1, $scores->filter('li.prediction')->count());
-        $this->assertContains($position, $client->getResponse()->getContent());
-        $this->assertContains($timing, $client->getResponse()->getContent());
+        $this->assertStringContainsString($position, $client->getResponse()->getContent());
+        $this->assertStringContainsString($timing, $client->getResponse()->getContent());
     }
 
     public function testUserPageShowsScoresForPreviousSeason()

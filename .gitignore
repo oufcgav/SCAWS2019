@@ -80,4 +80,8 @@ sqldumps/
 /.php_cs
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
-src/.DS_Store
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

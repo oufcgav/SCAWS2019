@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Season;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,10 +12,10 @@ class FixtureList extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Match::class);
+        parent::__construct($registry, MatchDay::class);
     }
 
-    public function findNextMatch(\DateTimeImmutable $now = null): ?Match
+    public function findNextMatch(\DateTimeImmutable $now = null): ?MatchDay
     {
         $now = $now ?? new \DateTimeImmutable();
 
@@ -30,7 +30,7 @@ class FixtureList extends ServiceEntityRepository
         ;
     }
 
-    public function findPreviousMatches(Season $season, Match $match): array
+    public function findPreviousMatches(Season $season, MatchDay $match): array
     {
         return $this->createQueryBuilder('m')
             ->where('m.date < :current')
@@ -43,7 +43,7 @@ class FixtureList extends ServiceEntityRepository
         ;
     }
 
-    public function findLastMatch(Season $season): ?Match
+    public function findLastMatch(Season $season): ?MatchDay
     {
         try {
             return $this->createQueryBuilder('m')

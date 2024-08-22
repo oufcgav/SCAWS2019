@@ -17,8 +17,8 @@ class TableEntry
      */
     private $id;
     /**
-     * @var Match
-     * @ORM\ManyToOne(targetEntity="Match")
+     * @var MatchDay
+     * @ORM\ManyToOne(targetEntity="MatchDay")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     private $match;
@@ -73,7 +73,7 @@ class TableEntry
         return $this->pints;
     }
 
-    public function setMatch(Match $match): TableEntry
+    public function setMatch(MatchDay $match): TableEntry
     {
         $this->match = $match;
 

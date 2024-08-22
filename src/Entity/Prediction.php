@@ -47,8 +47,8 @@ class Prediction
     private $atMatch;
 
     /**
-     * @var Match
-     * @ORM\ManyToOne(targetEntity="Match")
+     * @var MatchDay
+     * @ORM\ManyToOne(targetEntity="MatchDay")
      * @ORM\JoinColumn(name="match_id", referencedColumnName="id")
      */
     private $match;
@@ -117,12 +117,12 @@ class Prediction
         return $this;
     }
 
-    public function getMatch(): ?Match
+    public function getMatch(): ?MatchDay
     {
         return $this->match;
     }
 
-    public function setMatch(Match $match): self
+    public function setMatch(MatchDay $match): self
     {
         $this->match = $match;
 

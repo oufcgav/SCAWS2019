@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Match;
+use App\Entity\MatchDay;
 use App\Entity\Score;
 use App\Entity\Season;
 use App\Entity\TableEntry;
@@ -33,7 +33,7 @@ class PointsTable extends ServiceEntityRepository
      *
      * @return User[]
      */
-    public function loadCurrent(Season $season, array $users, ?Match $currentMatch = null): array
+    public function loadCurrent(Season $season, array $users, ?MatchDay $currentMatch = null): array
     {
         $usernames = array_map(function (User $user) {
             return $user->getUsername();
@@ -141,7 +141,7 @@ class PointsTable extends ServiceEntityRepository
     /**
      * @return TableEntry[]
      */
-    public function loadSavedTable(Match $match): array
+    public function loadSavedTable(MatchDay $match): array
     {
         $query = $this->_em->createQuery('
             SELECT te FROM App\Entity\TableEntry te 
