@@ -9,7 +9,6 @@ class SquadList
         return
             [
                 'Jamie Cumming (GK)',
-                'Simon Eastwood (GK)',
                 'Matt Ingram (GK)',
                 'Elliott Moore (D)',
                 'Sam Long (D)',
@@ -38,7 +37,7 @@ class SquadList
                 'Owen Dale (S)',
                 'Malcolm Ebiowei (S)',
                 'Dane Scarlett (S)',
-                'Przemysław Płacheta (S)',
+                'Przemyslaw Placheta (S)',
                 'Marselino Ferdinan (S)',
                 'Other (S)',
                 'Own goal (O)',
