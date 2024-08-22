@@ -10,6 +10,7 @@ class SquadList
             [
                 'Jamie Cumming (GK)',
                 'Matt Ingram (GK)',
+                'Simon Eastwood (GK)',
                 'Elliott Moore (D)',
                 'Sam Long (D)',
                 'Jordan Thorniley (D)',
