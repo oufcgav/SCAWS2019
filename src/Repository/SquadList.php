@@ -8,8 +8,8 @@ class SquadList
     {
         return
             [
-                'Jamie Cumming (GK)'
-                'Simon Eastwood (GK)'
+                'Jamie Cumming (GK)',
+                'Simon Eastwood (GK)',
                 'Matt Ingram (GK)',
                 'Elliott Moore (D)',
                 'Sam Long (D)',
