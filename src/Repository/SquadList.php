@@ -19,6 +19,7 @@ class SquadList
                 'Jack Currie (D)',
                 'Greg Leigh (D)',
                 'Joe Bennett (D)',
+                'Hidde ter Avest (D)',
                 'Other (D)',
                 'Idris El Mizouni (M)',
                 'Josh McEachran (M)',
@@ -38,6 +39,7 @@ class SquadList
                 'Malcolm Ebiowei (S)',
                 'Dane Scarlett (S)',
                 'Przemysław Płacheta (S)',
+                'Marselino Ferdinan (S)',
                 'Other (S)',
                 'Own goal (O)',
             ];
