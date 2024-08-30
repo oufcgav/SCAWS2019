@@ -14,6 +14,7 @@ class SquadList
                 'Elliott Moore (D)',
                 'Sam Long (D)',
                 'Jordan Thorniley (D)',
+                'Ben Nelson (D)',
                 'Peter Kioso (D)',
                 'Ciaron Brown (D)',
                 'Greg Leigh (D)',
