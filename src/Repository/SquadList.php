@@ -16,7 +16,6 @@ class SquadList
                 'Jordan Thorniley (D)',
                 'Peter Kioso (D)',
                 'Ciaron Brown (D)',
-                'Jack Currie (D)',
                 'Greg Leigh (D)',
                 'Joe Bennett (D)',
                 'Hidde ter Avest (D)',
