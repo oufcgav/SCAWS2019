@@ -47,7 +47,7 @@ class SaveHistoricTablesCommand extends Command
         $this->em = $em;
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $lastMatchSaved = $this->pointsTable->getLastMatchSaved();
         $lastMatchSaved = $this->fixtureList->find($lastMatchSaved);
