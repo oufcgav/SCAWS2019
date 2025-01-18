@@ -61,7 +61,7 @@ class ImportOldSeasonCommand extends Command
         $this->addArgument('season', InputArgument::REQUIRED, 'Season to import from');
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $seasonYear = (int) $input->getArgument('season');
 
@@ -201,7 +201,7 @@ class ImportOldSeasonCommand extends Command
     {
         $sql = "
             SELECT *
-            FROM ${entityName}_${seasonYear}
+            FROM {$entityName}_{$seasonYear}
         ";
         $oldEntities = $this->em->getConnection()->fetchAllAssociative($sql);
         foreach ($oldEntities as $entity) {

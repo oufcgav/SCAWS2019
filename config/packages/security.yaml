@@ -1,5 +1,5 @@
 security:
-    encoders:
+    password_hashers:
         App\Security\User:
             algorithm: auto
 
@@ -13,26 +13,29 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
-            guard:
-                authenticators:
-                    - App\Security\LoginAuthenticator
-            remember_me:
-                secret:   'All we want is a team of Andy Whings'
-                lifetime: 604800 # 1 week in seconds
-                path:     /
+            form_login: ~
+#            remember_me:
+#                secret:   'All we want is a team of Andy Whings'
+#                lifetime: 604800 # 1 week in seconds
+#                path:     /
             logout: true
+            custom_authenticators:
+                - App\Security\LoginAuthenticator
+            entry_point: form_login
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+            remember_me:
+                secret: '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/logout$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/logout$, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

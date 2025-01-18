@@ -2,9 +2,10 @@
 
 namespace App\Security;
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private $username;
 
@@ -45,6 +46,14 @@ class User implements UserInterface
      * @see UserInterface
      */
     public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    /**
+    * Returns the identifier for this user (e.g. username or email address).
+    */
+    public function getUserIdentifier(): string
     {
         return (string) $this->username;
     }
