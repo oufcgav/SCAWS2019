@@ -24,8 +24,9 @@ class UserProvider implements UserProviderInterface
             'Gav',
             'Just',
             'Malc',
-	        'Smudger',
             'Reggie',
+	        'Smudger',
+
         ];
         $this->defaultPassword = $defaultPassword;
     }
