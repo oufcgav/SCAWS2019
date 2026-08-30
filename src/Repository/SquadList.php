@@ -26,6 +26,7 @@ class SquadList
                 'Will Vaulks (M)',
                 'Brian De Keersmaecker (M)',
                 'Louis Sibley (M)',
+                'Kai Andrews (M)',
                 'Other (M)',
                 'Mark Harris (S)',
                 'Aidomo Emakhu (S)',
