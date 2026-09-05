@@ -33,6 +33,7 @@ class SquadList
                 'Luka Lynch (S)',
                 'Jin Woo Jeon (S)',
                 'Gatlin ODonker (S)',
+                'Mo Missanga (S)',
                 'Other (S)',
                 'Own goal (O)',
             ];
